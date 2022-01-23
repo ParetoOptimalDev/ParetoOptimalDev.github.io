@@ -3,6 +3,8 @@
 :END:
 #+title: Customizing devos after install for my use-cases
 
+* continues from [[id:8c43f1ce-24c8-4a67-8077-786b17ca2ff5][installing NixOS using devos and nix flakes]]
+
 * make sure rebuilding works
 
 #+name: QzVDzM3S8Wpna6jgfShMsi
@@ -66,5 +68,104 @@ At least the pain brings forth a thought and concept for a new page, just faster
 
 ** many would blame [[id:4d24c424-8b8b-4f35-97eb-ed8eee51f8ec][NixOS]] or their linux distribution their trying to install for this error I bet, especially if they were new
 
-* Got some error by default 
+* Okay, that's done reboot and run =bud rebuild $host switch=
 
+err not quite, this is a new error to add to [[id:738c41e1-7312-4125-94a7-ce5489df77b7][issues with DevOS]]:
+
+#+name: TskyggxjdJQrGFVnwa5UGm
+#+begin_example
+You cannot use the flake's store path for reference.
+/run/current-system/sw/bin/bud: line 29: This script requires a pointer to the writable flake root. : command not found
+#+end_example
+
+* Oh that's user error I think, when I cloned the repo as root to =/system= in the intial install it resulted in this :/
+
+* Umm... even though =parted= reports 512mb available in boot partition the systemd-boot script and =df -h= report the wrong available size
+
+* apparently running =fdisk -l= will show warnings and it gives us
+
+Partition 1 does not start on physical sector boundary
+
+* I'm gonna try booting liveusb and running "check" from gparted first
+
+GNU Parted cannot resize this partition to this size. We're working on it!
+
+Ah, gparted can't resize partitions less than 256mb
+
+#+begin_quote
+The inability to resize FAT16/FAT32 file systems that are less than 256 MB remains.
+
+
+Workaround:  Resizing FAT16/FAT32 Partitions (less than 256 MB)
+---------------------------------------------------------------
+
+  1.  Backup the data in the FAT16/FAT32 partition
+  2.  Reformat the partition to EXT4
+  3.  Resize EXT4 partition to desired partition size
+  4.  Reformat the partition back to FAT16/FAT32
+  5.  Restore the FAT16/FAT32 files from backup
+
+Note that if you use file system labels you may wish to re-label the partition at this time.
+#+end_quote
+
+
+https://bugzilla.gnome.org/show_bug.cgi?id=649324#c4
+
+* *cross fingers*... I think we booted... wait no... agh the uuid is now different on the boot device :/
+
+* Will I have to reclone/redownload devos for the 4th time
+
+* maybe I can just use the first generation that looks for =disk/by-label/nixos= and it'll work this time? Hopefully
+
+** nope =timed out waiting for device /dev/disk/by-label/nixos=
+
+* Actually it's not so bad, as long as nixos-enter works
+
+Nope:
+
+$ nix-shell
+cannot connect to socket at '/nix/var/nix/daemon-socket/socket': Connection refused
+
+* nevermind, just redownloading 20GB or w/e again and taking a break lol
+
+* Oh goodie... I think _trying_ to use =nixos-enter= broke =nix-shell= somehow
+
+* And it's still broke with
+
+getting attributes of path all...-source no such file or directory for flake-utils 747e4319
+
+* I'll update the flake.lock from my other nixos machine, commit it, then try again
+
+** that also didn't work... idk what to even do
+
+* That wasn't enough, what's going on here is pretty complex
+
+** the nix override for nix-direnv is
+
+*** necessary in the live usb [[id:4d24c424-8b8b-4f35-97eb-ed8eee51f8ec][NixOS]] 21.11
+
+*** causes an error after you run =bud rebuild $host switch=
+
+*** and the flake.lock in =github.com/divnix/devos= right now can't be updated without removing the nix-direnv override
+
+This sort of churn that I think is caused by backwards incompatible flake changes is perhaps the biggest source of issues, not necessarily [[id:738c41e1-7312-4125-94a7-ce5489df77b7][issues with DevOS]]?
+
+i wonder if [[id:78f7b6b7-cd06-4dcf-b347-144a48efe132][flake-utils-plus]] users experience this as well.
+
+** That means the "fixes" I committed had to be rolled back
+
+** That is fine I guess if you have no issues
+
+* Okay, reverting to the =flake.lock= of devos right now and adding the direnv override back works
+
+* I almost forgot to make the change to the uuid with all of these other problems
+
+* Alright, did that, ran install command, completed y/n prompts, now waiting for install to finish
+
+* rebooting and /crossing fingers/, selected new generation, and 
+
+** slight annoyance, too many net devices were in hardware confiuration and have to wait for their timeout
+
+** uggh is this gonna mess up dhcp/internet?
+
+* Okay, things are working kind of... now [[id:738c41e1-7312-4125-94a7-ce5489df77b7][issues with DevOS]] not picking up new modules I add even though called =git add= on them and added them to =nixos.importables.suites.myEnv=
