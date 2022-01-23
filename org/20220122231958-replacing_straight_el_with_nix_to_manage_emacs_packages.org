@@ -6,7 +6,9 @@
 
 * Why?
 
-You can see my history of =package.el -> straight.el -> Nix= for managing [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] packages in [[id:8924b05d-a97d-4507-93ec-0cb3a1d3af5e][Package management and configuration in emacs]].
+In short, for better reproducability and to free me from manual intervention because packages broke later.
+
+For more details you can see my history of =package.el -> straight.el -> Nix= for managing [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] packages in [[id:8924b05d-a97d-4507-93ec-0cb3a1d3af5e][Package management and configuration in emacs]].
 
 * The simple case
 
