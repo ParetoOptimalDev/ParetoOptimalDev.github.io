@@ -1,0 +1,97 @@
+:PROPERTIES:
+:ID:       baf8c711-6b4c-49f1-aa66-4da6d56d4ac7
+:END:
+#+title: Replacing straight.el with Nix to manage emacs packages
+
+
+* Why?
+
+You can see my history of =package.el -> straight.el -> Nix= for managing [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] packages in [[id:8924b05d-a97d-4507-93ec-0cb3a1d3af5e][Package management and configuration in emacs]].
+
+* The simple case
+
+** straight.el configuration
+*** early-init.el
+
+#+name: 5TUXxrmRSkzfKYZbaSgh4E
+#+begin_src emacs-lisp
+(setq package-enable-at-startup nil)
+#+end_src
+
+
+*** init.el
+#+name: 4NEgwbQ5iedSrkR3uqQfoy
+#+begin_src emacs-lisp
+    (defvar bootstrap-version)
+    (let ((bootstrap-file
+           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+          (bootstrap-version 5))
+      (unless (file-exists-p bootstrap-file)
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+             'silent 'inhibit-cookies)
+          (goto-char (point-max))
+          (eval-print-last-sexp)))
+      (load bootstrap-file nil 'nomessage))
+
+  (setq straight-use-package-by-default t)
+
+  (straight-use-package 'use-package)
+
+  (use-package magit)
+
+#+end_src
+** nix configuration
+*** early-init.el
+
+#+name: 5TUXxrmRSkzfKYZbaSgh4E
+#+begin_src emacs-lisp
+  (setq package-enable-at-startup nil)
+  ;; let's be really sure package.el isn't used
+  (setq use-package-ensure-function 'ignore)
+  (setq package-archives nil)
+#+end_src
+
+*** configuration.nix
+
+#+begin_src nix
+  { config, pkgs, ... }:
+
+  # note: you can store this in an external file like the NixOS manual example as well:
+  # https://nixos.org/manual/nixos/stable/index.html#module-services-emacs-adding-packages
+  let customEmacs = let
+        myEmacs = pkgs.emacs; 
+        emacsWithPackages = (pkgs.emacsPackagesFor myEmacs).emacsWithPackages; 
+      in
+        emacsWithPackages (epkgs: (with epkgs.melpaPackages; [ magit ]))
+  in
+  {
+    # ... other configuration
+
+   environment.systemPackages = with pkgs; [
+     # ... other packages
+     myEmacs
+   ];
+    # ... other configuration
+  }
+#+end_src
+*** init.el
+#+name: A7YuReYJGxh57uVkvBKbnd
+#+begin_src emacs-lisp
+  (use-package magit)
+#+end_src
+
+
+* Install source version of a package
+
+** using straight.el
+
+** using nix
+
+* Downsides of using Nix for [[id:8924b05d-a97d-4507-93ec-0cb3a1d3af5e][Package management and configuration in emacs]]
+
+** I have to restart emacs when I install a new package
+
+I could figure out how to modify the load-path appropriately and it's on my backlog, but I've never gotten around to it.
+

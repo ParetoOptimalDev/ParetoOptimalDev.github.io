@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       4fd344f2-0b51-4783-a739-2d6df228b38d
+:END:
+#+title: develop Haskell projects using NixOS
+

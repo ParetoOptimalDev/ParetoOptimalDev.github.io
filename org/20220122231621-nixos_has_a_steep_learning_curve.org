@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       72bee964-b609-4624-9add-b4d22218b7cd
+:END:
+#+title: NixOS has a steep learning curve
+
