@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       bedd2f19-ba7a-4680-a027-2080bd114707
+:END:
+#+title: Why pick emacs over vscode?
+
+
+#+begin_quote
+Pick a random modern IDE or editor (I've tried with Atom, VSCode, Pycharm).
+Try to get it to:
+On startup (or easy mode - ever) open four terminals, space them in four windows, and when you execute commands in them allow reverse searching and pasting of the output history in the same way you navigate your code (for me, evil-mode).
+
+None of them can do it, if you read the issues/source for VScode it doesn't use a universal concept of windows/buffers, so the terminal is implemented in a "panel" which can't be arbitrarily split, moved, edited in the same way as your code buffers. Atom it might be possible but last I saw no-one had implemented it. That's like the first thing I need for a place to hack code from, it's simple as heck, incredibly useful and the state of the art can't do it.
+
+I don't know how they keep messing this up, why the hell wouldn't you use windows/buffers/grid-system it's so clearly the right abstraction. Has noone who wrote vscode ever used Emacs? https://github.com/Microsoft/vscode/issues/56112
+https://old.reddit.com/r/emacs/comments/9gucsu/why_you_should_buy_into_the_emacs_platform/e7dvwwx/
+#+end_quote
+

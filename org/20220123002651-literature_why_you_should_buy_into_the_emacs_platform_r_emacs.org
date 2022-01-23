@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       4d2cec5f-5ea2-402f-8d5e-ca4d9a09d680
+:END:
+#+title: Literature: Why You Should Buy Into the Emacs Platform - r/emacs
+
+https://old.reddit.com/r/emacs/comments/9gucsu/why_you_should_buy_into_the_emacs_platform/
+
+* comment: emacs more extensible than modern editors
+#+begin_quote
+Pick a random modern IDE or editor (I've tried with Atom, VSCode, Pycharm).
+Try to get it to:
+On startup (or easy mode - ever) open four terminals, space them in four windows, and when you execute commands in them allow reverse searching and pasting of the output history in the same way you navigate your code (for me, evil-mode).
+
+None of them can do it, if you read the issues/source for VScode it doesn't use a universal concept of windows/buffers, so the terminal is implemented in a "panel" which can't be arbitrarily split, moved, edited in the same way as your code buffers. Atom it might be possible but last I saw no-one had implemented it. That's like the first thing I need for a place to hack code from, it's simple as heck, incredibly useful and the state of the art can't do it.
+
+I don't know how they keep messing this up, why the hell wouldn't you use windows/buffers/grid-system it's so clearly the right abstraction. Has noone who wrote vscode ever used Emacs? https://github.com/Microsoft/vscode/issues/56112
+https://old.reddit.com/r/emacs/comments/9gucsu/why_you_should_buy_into_the_emacs_platform/e7dvwwx/
+#+end_quote
+
+I guess that quote is enough to kick off the node [[id:bedd2f19-ba7a-4680-a027-2080bd114707][Why pick emacs over vscode?]] :)
+
+* comment: why is magit better than sourcetree?
+
+#+begin_quote
+I have seen this channel. It isn't updated anymore and I do recall the author mentioning he is busy so he can't post as often as he would like. That being said, I do like the content he put out. I wish there was more of it! The problem I was alluding too was more specific, for example, 'magit' is awesome. Okay, let's show off why magit is really awesome and not a generic git tool i.e. what can it do that really separates it from other git tools? Why would I bother with magit rather than Sourcetree for example?
+#+end_quote
+
+My first guess here:
+
+- [[id:787561bc-2915-40ae-aff0-af363d5b98ab][text user interfaces are faster than graphic interfaces]] and typically allow "composing" operations
+- more information, though sometimes this can be a bad thing for UX and overwhelming

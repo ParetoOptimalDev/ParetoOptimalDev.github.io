@@ -1,0 +1,53 @@
+:PROPERTIES:
+:ID:       01492b71-3cc4-47d0-9c54-558f893ac746
+:END:
+#+title: Customizing devos after install for my use-cases
+
+* make sure rebuilding works
+
+#+name: QzVDzM3S8Wpna6jgfShMsi
+#+begin_src sh
+bud rebuild $yourHostName switch
+#+end_src
+
+* Some weird nix error, but I see it's to do with direnv
+
+[[id:738c41e1-7312-4125-94a7-ce5489df77b7][issues with DevOS]] can be annoying, I know this is due to a previous workaround for direnv because of rapid development of [[id:173db361-be2d-41f1-9d24-45a600d5838b][Nix flakes]] while it's not in [[id:4d24c424-8b8b-4f35-97eb-ed8eee51f8ec][NixOS]] by default.
+
+In =overlays/overrides.nix=:
+
+#+begin_src diff
+@@ -15,9 +15,6 @@ channels: final: prev: {
+     deploy-rs
+     ;
+ 
+-  # nix is set to 2.3 in 21.11
+-  nix-direnv = prev.nix-direnv.override { nix = prev.nixUnstable; };
+-
+   haskellPackages = prev.haskellPackages.override
+     (old: {
+       overrides = prev.lib.composeExtensions (old.overrides or (_: _: { })) (hfinal: hprev:
+#+end_src
+
+* Now that we can successfully rebuild, time to configure!
+
+* Or not... =During handling of the above exception, another exception occurred= :S
+
+Something to do with updating systemd-boot from 249.5 to 249.7 where =profile= is referenced before it's defined.
+
+At least the pain brings forth a thought and concept for a new page, just faster than I thought I'd get around to creating it:
+
+[[id:1f8f653a-737f-41ef-81e1-145b59bce2bf][Static type systems should be the default in computer programming]]
+
+* Oh wait... no... because there was traceback after traceback I focused on the wrong thing
+
+* This is actually an error due to the boot partition only being 96M :S
+
+** time to reboot, resize windows partition, move all partitions to the right, and resize the boot partition to the usual 512mb at the start of the disk
+
+** Let's make the boot partion 96mb rather than 512mb to get that sweet 416mb of space and make those who dare to install another OS's life harder!
+
+** many would blame [[id:4d24c424-8b8b-4f35-97eb-ed8eee51f8ec][NixOS]] or their linux distribution their trying to install for this error I bet, especially if they were new
+
+* Got some error by default 
+

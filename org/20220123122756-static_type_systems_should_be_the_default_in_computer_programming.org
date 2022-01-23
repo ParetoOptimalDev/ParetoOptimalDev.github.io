@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       1f8f653a-737f-41ef-81e1-145b59bce2bf
+:END:
+#+title: Static type systems should be the default in computer programming
+

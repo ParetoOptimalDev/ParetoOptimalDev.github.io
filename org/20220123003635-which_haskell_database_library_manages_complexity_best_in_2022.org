@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       685867bd-b6e9-4a23-a1ff-decfc0591a68
+:END:
+#+title: Which Haskell database library manages complexity best in 2022?
+
+
+#+begin_quote
+Now that I've used Esqueleto professionally in anger, I would understand anyone who used it and then swore off static types forever. - @ttuegel
+#+end_quote
+
+Seeing this quote got me thinking about writing this very node again since I:
+
+- frequently use Esqueleto
+- have used Beam in the past
+- have looked on longingly at rel8 (built on top of Opaleye)
+- Recently annoyed with complexity while trying to teach others to use soon to be default Esqueleto.Experimental
+
+I had the thought on a mentally slow day where I was struggling to line up types that Esqueleto.Experimental didn't seem much easier than Beam did and wondered if it could be more complex.
+
+This is my exploration to see if using a complex (rather than simple) example if Esqueleto.Experimental is still the simplest.
+
+* Real-world example with some complexity
+
+* Esqueleto
+
+* Beam
+
+* rel8

@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       787561bc-2915-40ae-aff0-af363d5b98ab
+:END:
+#+title: text user interfaces are faster than graphic interfaces
+
+
+* For example, magit in [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] versus sourcetree
+
+** TODO test if this is true

@@ -1,0 +1,147 @@
+:PROPERTIES:
+:ID:       8c43f1ce-24c8-4a67-8077-786b17ca2ff5
+:END:
+#+title: installing NixOS using devos and nix flakes
+
+* Create a live usb with the latest [[id:4d24c424-8b8b-4f35-97eb-ed8eee51f8ec][NixOS]] 21.11
+
+** [[https://channels.nixos.org/nixos-21.11/latest-nixos-gnome-x86_64-linux.iso][Download the recommended gnome version]]
+
+** Follow instructions for [[https://nixos.org/manual/nixos/stable/index.html#sec-booting-from-usb][Copying it to a usb stick]] but with a progress bar and larger block size
+
+So that means:
+
+#+name: WNgMyABrpQ6QxnjpqdqoRi
+#+begin_src sh
+dd if=path-to-image of=/dev/sdX bs=4096 status=progress
+#+end_src
+
+** go for a short walk
+
+** run the =sync= command to flush caches because I'm paranoid
+
+* Boot into the live cd with no issues
+
+Wow Linux setup has come a long way!
+
+* open a terminal as root
+
+* Clone my devos fork
+
+#+name: ZQHmabsDDmQP5xiG6BwYmJ
+#+begin_src sh
+git clone git@github.com:ParetoOptimalDev/system.git
+#+end_src
+
+* Enter =system= and run =nix-shell=
+
+* Do a 5m yoga session
+
+* Partition for dual booting windows
+
+Roughly you can follow https://nixos.org/manual/nixos/stable/index.html#sec-installation-partitioning
+
+** In gparted
+
+*** resize the windows partition to make room for the =nixos= and =swap= partitions and label them
+
+*** I'll re-use the already created boot partition
+
+That means I'll mount it differently from the instructions later
+
+** wait a bit, surprisingly this completed in just a couple minutes
+
+* Mount partitions
+
+** Roughly follow https://devos.divnix.com/start/bootstrapping.html#mount-partitions with some differences
+
+#+name: mv5k8iNKCzY4s6UveZbFeG
+#+begin_src sh
+mount /dev/disk/by-label/nixos /mnt
+#+end_src
+
+one difference being the already created EFI =boot= partition was named =SYSTEM=
+
+#+name: ScozYCiZaySkjF6ufiVdMJ
+#+begin_src sh
+mkdir -p /mnt/boot && mount /dev/disk/by-label/SYSTEM /mnt/boot
+#+end_src
+
+#+name: HawSNMxRyXRAbdDBsiVvRU
+#+begin_src sh
+swapon /dev/disk/by-label/swap
+#+end_src
+
+#+name: gcUvLym3gWWb9VUxw2RxYt
+#+begin_src sh
+  mkdir -p /mnt/tmpstore/{work,store}
+mount -t overlay overlay -olowerdir=/nix/store,upperdir=/mnt/tmpstore/store,workdir=/mnt/tmpstore/work /nix/store
+#+end_src
+
+* [[*Do the hardware configuration correctly][Do the hardware configuration correctly unlike me the first time]]
+
+* Start installing from flake
+
+#+name: n6AxfuoaTsa475Uap6eCSh
+#+begin_src sh
+nixos-install --flake .#NixOS
+#+end_src
+
+* Go watch a tv show
+
+* type in a root password
+
+* reboot and pull out live usb
+
+* Do the hardware configuration correctly
+
+** I had to do this but luckily you can do it right the first time
+
+*** select nixos, it hangs on =waiting for /dev/disk/by-id/nixos= to appear :S
+
+*** put live usb back in, hit r to reboot, hit F12 to select usb drive as boot device
+
+*** figure out what's wrong
+
+*** for some reason it's not finding nixos by label
+
+*** we'll generate a custom hardware configuration
+
+** run =bud up=
+
+*** verify these records look okay in =hosts/NixOS/hardware-configuration.nix=
+
+
+Something like:
+
+#+begin_src nix
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/your-linux-partition-uuid";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/your-boot-partition-uuid";
+      fsType = "vfat";
+    };
+#+end_src
+
+*** now you're ready to install and hopefully boot successfully in the next step
+
+** I actually think this isn't supposed to be necessary
+
+The default NixOS host has:
+
+#+begin_src nix
+  fileSystems."/" = { device = "/dev/disk/by-label/nixos"; };
+#+end_src
+
+but IIRC my error said something like:
+
+Couldn't find =/dev/disk/by-id/nixos=
+
+So maybe there's a boot loader generation bug where =label= should be used rather than =id=
+
+I'll tag it with [[id:738c41e1-7312-4125-94a7-ce5489df77b7][issues with DevOS]] for now and maybe post an upstream issue later.
+
+* start [[id:01492b71-3cc4-47d0-9c54-558f893ac746][Customizing devos after install for my use-cases]]

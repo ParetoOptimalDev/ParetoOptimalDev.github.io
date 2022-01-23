@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       738c41e1-7312-4125-94a7-ce5489df77b7
+:END:
+#+title: issues with DevOS
+
+I'm tracking these because I've lost some time due to instability around updates and considered moving to [[id:78f7b6b7-cd06-4dcf-b347-144a48efe132][flake-utils-plus]] which offers less features but might be more stable.

@@ -12,7 +12,11 @@ I used this until I ran into two problems:
 - Using packages not yet in elpa or melpa easily from github
 - [[https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341#19]["https://elpa.gnu.org/packages/archive-contents" "Bad Request"]]
 
-Maybe now there are better solutions, but I moved on to [[*straight.el][straight.el]]
+Maybe now there are better solutions, but I moved on to [[*straight.el][straight.el]].
+
+Sometimes I think about returning because I've found sticking to base packages that closely follow emacs conventions seems to make debugging and maintaining my configuration easier for some reason.
+
+This also reminds me of 
 
 * straight.el
 

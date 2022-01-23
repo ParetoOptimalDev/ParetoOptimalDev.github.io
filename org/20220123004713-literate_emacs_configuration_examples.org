@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       37518482-c1b0-4c63-8fb7-7e81d2698774
+:END:
+#+title: Literate emacs configuration examples
+
+* Amazing
+
+** [[https://alhassy.github.io/emacs.d/index.html][alhassy's lifemacs]]
+
+** [[https://tecosaur.github.io/emacs-config/config.html][tecosaur's emacs doom config]]
+
+** [[https://protesilaos.com/emacs/dotemacs][Protesilaos Stavrou's emacs configuration]]
+
+* resources
+
+** [[https://github.com/caisah/emacs.dz][A list of people's nice emacs config files]]

@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       77c69af4-91c3-490f-abde-601d48677a07
+:END:
+#+title: Literature: Emacs: from catching up to getting ahead - r/emacs
+
+[[id:5861e294-d990-4163-b470-8af821ff986b][emacs]]
