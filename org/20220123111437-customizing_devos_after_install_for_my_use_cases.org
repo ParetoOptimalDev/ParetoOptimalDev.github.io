@@ -169,3 +169,5 @@ i wonder if [[id:78f7b6b7-cd06-4dcf-b347-144a48efe132][flake-utils-plus]] users 
 ** uggh is this gonna mess up dhcp/internet?
 
 * Okay, things are working kind of... now [[id:738c41e1-7312-4125-94a7-ce5489df77b7][issues with DevOS]] not picking up new modules I add even though called =git add= on them and added them to =nixos.importables.suites.myEnv=
+
+* and finally... after like 4-5 hours... I have emacs and can move from writing this on my laptop to my new PC
