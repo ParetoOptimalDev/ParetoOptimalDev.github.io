@@ -36,7 +36,7 @@ sourceRepoURL = "https://github.com/ParetoOptimalDev/ParetoOptimalDev.github.io/
     lineNos = false
     lineNumbersInTable = true
     noClasses = true
-    style = "monokai"
+    style = "tango"
     tabWidth = 4
 
 [permalinks]
