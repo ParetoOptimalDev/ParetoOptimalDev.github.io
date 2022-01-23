@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       07852eb7-3728-42b5-b72c-58c92757fc80
+:END:
+#+title: home-manager
+
+Frequently used in conjunction with [[id:4d24c424-8b8b-4f35-97eb-ed8eee51f8ec][NixOS]], it allows users to encode their =dotfiles= in their nix configuration either inline or by files in their [[id:4f03c297-e2d1-42b0-a020-9714d17480e7][NixOS configuration]]

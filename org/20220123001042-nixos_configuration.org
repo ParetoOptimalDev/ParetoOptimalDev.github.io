@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       4f03c297-e2d1-42b0-a020-9714d17480e7
+:END:
+#+title: NixOS configuration
+
+I'll typically assume this means using [[id:173db361-be2d-41f1-9d24-45a600d5838b][Nix flakes]], unless I think it's 100% necessary to default to old-style non-flake configurations for accessibility such as in [[id:8924b05d-a97d-4507-93ec-0cb3a1d3af5e][Package management and configuration in emacs]] where the audience might have never used [[id:4d24c424-8b8b-4f35-97eb-ed8eee51f8ec][NixOS]].

@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       173db361-be2d-41f1-9d24-45a600d5838b
+:END:
+#+title: Nix flakes
+
+* resources
+
+** https://www.tweag.io/blog/2020-05-25-flakes/
+
+** https://serokell.io/blog/practical-nix-flakes (pretty accessible imo)
