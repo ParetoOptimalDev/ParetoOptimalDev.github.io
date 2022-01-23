@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       a5cef32d-8769-41ab-936b-bc3e3aa2e7da
+:END:
+#+title: Literature: Abusing org-roam as a personal CRM - r/emacs
+
+#+begin_quote
+I've found myself wanting to have the ability to see how other people use computers more effectively without committing half an hour or so to a video. So I tried to make a very short video showing how I use org-roam as a personal CRM. It isn't a mind-blowing use-case, it isn't any complex elisp, it is just a window into how I use Emacs to solve a problem that needed solving.
+#+end_quote
+
+Quick to the point videos solving a problem completely without huge time commitment seems nice to me!
+
+I posted a [[https://old.reddit.com/r/emacs/comments/sa8i0m/abusing_orgroam_as_a_personal_crm/httq735/][comment]] as well asking if using [[id:d677983a-dadd-4c9c-9fe8-6b57ddc33107][org-roam]] as a CRM was abuse since it gets into answering [[id:14a931f5-4476-4f29-b47e-c8a83a9c04ab][Should org-roam/zettlekasten be used only for concepts or also for more general data?]].
+
+No replies sadly, I'd like to hear others opinions since I can't decide.

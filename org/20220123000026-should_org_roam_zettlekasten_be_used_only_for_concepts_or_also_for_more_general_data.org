@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       14a931f5-4476-4f29-b47e-c8a83a9c04ab
+:END:
+#+title: Should org-roam/zettlekasten be used only for concepts or also for more general data?
+
+I suppose if you're following zettlekasten or especially [[id:9a2b5d98-d007-4505-b736-591e5b5ec2c8][Evergreen Notes]], it'll be more about developing knowledge and concepts.
+
+Otherwise these general pages would clutter up all your other discovery features.
+
+Ex. A mathematician searching for things related to =pi= getting results like:
+
+- serendipity
+- pickups for sale in Tampa
+- Getting started with raspberry PI
+- My unique special idea about Pi that was the result of weeks of racking my brain
+
+My initial though, perhaps because I'm still affected by the collectors fallacy, was that I could handle this with categorization or tags and narrowing =general= things out or narrowing just to =concepts=.
+
+So solve the problem by adding another taxonomy on top of it ;)
+
+Maybe just keeping things focused on concepts is the right way... maybe
+
