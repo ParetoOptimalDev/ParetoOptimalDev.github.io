@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       ac851660-52e9-44bb-9cbf-5ac735326ae3
+:END:
+#+title: Managing your emacs configuration, system configuration, and all dependencies in a single org file
+
