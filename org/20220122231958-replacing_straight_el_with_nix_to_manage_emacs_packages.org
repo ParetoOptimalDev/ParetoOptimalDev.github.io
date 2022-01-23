@@ -89,7 +89,7 @@ You can see my history of =package.el -> straight.el -> Nix= for managing [[id:5
 
 ** using nix
 
-* Downsides of using Nix for [[id:8924b05d-a97d-4507-93ec-0cb3a1d3af5e][Package management and configuration in emacs]]
+* Downsides of using Nix emacs packages
 
 ** I have to restart emacs when I install a new package
 
