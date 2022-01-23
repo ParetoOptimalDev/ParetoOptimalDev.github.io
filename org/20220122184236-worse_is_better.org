@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       4cf7ba2e-e038-424d-bb78-51381cdeb2e2
+:END:
+#+title: worse is better
+
+https://en.wikipedia.org/wiki/Worse_is_better
+
+Also known as "New Jersey style".
+
+[[https://www.jwz.org/doc/worse-is-better.html][The Rise of ``Worse is Better'']]
+
+* Related
+
+** [[id:39a9cd0f-5719-4c02-ac54-419747ec1e47][Go]]
+
+** [[id:b236fcd6-2ca6-436d-aa54-395d6e339d2b][Simple Haskell]]

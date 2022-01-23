@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       c49ba04f-f054-4455-b406-558201285ac4
+:END:
+#+title: Choosing "Fancy Haskell" can be for pragmatic reasons
+#+filetags: :seed:
+
+* stuff                                                              :ATTACH:
+:PROPERTIES:
+:ID:       064c8917-734f-4bce-b4bc-660d379e7166
+:END:
+
+[[file:data/06/4c8917-734f-4bce-b4bc-660d379e7166/0*QocHsYZWXoucvAxl.jpg]]
+
+* Related
+
+** [[id:92821dd5-43da-4918-96fc-7be8778009ab]["Simple Haskell" can result in simple code but complex codebases]]
+
+** Related
+*** [[id:25626fcc-e67b-4b44-be44-92d28f244bef][Haskell]]

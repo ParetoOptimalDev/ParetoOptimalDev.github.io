@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       a35569f6-abe4-443b-9d3d-308b4f24b132
+:END:
+#+title: brand of simplicity
+
+
+I find that most arguments about simplicity aren't based in objective truth, but rather treat subjective ideas as objective fact in order to allow an argument to be stronger than it actually is.
+
+So [[id:a35569f6-abe4-443b-9d3d-308b4f24b132][brand of simplicity]] is a way to:
+
+- indicate something being called simple isn't necessarily simple
+- encourage thinking about other values or vectors in which the subject wouldn't be simple
+- Push towards thinking about [[id:384a06c2-9e73-41e4-ab7c-e6207f9d1907][Pareto Optimality]]
+
+For instance the [[id:39a9cd0f-5719-4c02-ac54-419747ec1e47][Go]] claimed for a very long term to not have parametric polymorphism "cuz simplicity". I find that backwards given that even for very small projects the reduction in code duplication would be worth the cost of extra complexity. Complexity which itself has already been paid for by the wider software programming in terms of prior knowledge and experience dating back to generics in other languages such as Java.

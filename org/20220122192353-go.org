@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       39a9cd0f-5719-4c02-ac54-419747ec1e47
+:END:
+#+title: Go
+
+The programming language that was proud of not having generics in their language for most of the languages life.

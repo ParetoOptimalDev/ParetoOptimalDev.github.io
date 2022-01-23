@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       26f9c7e9-383f-457d-8ed8-1fb24315b460
+:END:
+#+title: Categorizing state/quality of notes with tags and the real life tree lifecycle
+
+It can be useful to look at the "timelines", "maturity of development", or "doneness" of notes in an exobrain, zettlekasten, or digital garden given quality can vary widely.
+
+Taking inspiration from [[id:9a2b5d98-d007-4505-b736-591e5b5ec2c8][Evergreen Notes]] we can use the following tree inspired cateories:
+
+- seed (aka stub elsewhere)
+- stem
+- sprout
+- sapling
+- tree
+- evergreen
+
+This could be further augmented by using tags to delineate between =polished= and =unpolished= pieces of writing.
+
+One example is an =unpolished= =evergreen= would have strong concepts and a well formed idea but the structure could be very messy or a little hard to follow.

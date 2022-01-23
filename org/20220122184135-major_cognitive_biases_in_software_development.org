@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       a5d4fd74-7a97-4988-bd38-b80d2deaf94b
+:END:
+#+title: major cognitive biases in software development
+

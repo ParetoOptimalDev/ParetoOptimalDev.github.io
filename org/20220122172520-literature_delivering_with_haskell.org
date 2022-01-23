@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       e22ebaa9-9769-4d03-856b-070849f86033
+:ROAM_ALIASES: seed
+:END:
+#+title: Literature: Delivering with Haskell
+
+https://levelup.gitconnected.com/delivering-with-haskell-a347d8359597

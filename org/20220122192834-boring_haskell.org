@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       c4ce6f4f-dd9c-496e-ba2c-3f1da23329af
+:END:
+#+title: "boring haskell"
+

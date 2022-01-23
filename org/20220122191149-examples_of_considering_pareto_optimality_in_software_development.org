@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       ccdb6f53-e831-4d71-a3f6-eb71c47a8110
+:END:
+#+title: examples of considering pareto optimality in software development
+
+* Ease of use and type-safety of [[id:25626fcc-e67b-4b44-be44-92d28f244bef][Haskell]] programs
+
+** quote from [[id:bf6e0a46-d764-46f9-b22a-e06d68fd0af1][the original quote that got me thinking about pareto optimality and software development]]
+
+#+begin_quote
+Arguably, ease-of-use and type safety could be such a case. For a long time the Haskell community has had a lot of places to get "free" gains in both dimensions. But, it should be expected that if you get enough of these gains squared away, that eventually you will hit the point where they will become tradeoffs. And not just "tradeoffs because you aren't skilled enough to use the 'hard' stuff yet", but truly tradeoffs, for everybody. Users with differing skills and needs may choose different points on the curve for their own needs, but a discussion about tradeoffs is a fundamentally different discussion than one about right vs. wrong.
+#+end_quote
+
+** takeaways and thoughts from re-reading this
+
+*** What can we improve in X positively that doesn't affect Y negatively?
+
+*** Eventually you'll hit the wall of tradeoffs, but most assume they are in tradeoff territory way too soon
+
+**** To [[id:52376812-2211-4a82-b546-321b7661d225][counteract my cognitive biases by playing devils advocate]] though, we humans only have finite time and that forces us to prioritize
+
+* TODO Choosing ide's that "good out of the box" versus more extensible editors 
+
+** examples being
+
+*** [[id:959bc6c3-d252-43c2-b62c-484ab0681a7a][vscode]]
+
+*** [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]]
+
+** Thinking from the lens [[id:52376812-2211-4a82-b546-321b7661d225][counteract my cognitive biases by playing devils advocate]]  though
+
+Me stating this might be not considering Pareto Optimality in that, there's a lot that could be done to make [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] better out of the box without sacrificing it's extensibility. My gut response though is that the hesitance in changing defaults is something that has kept it's userbase over the years, and potential adoption of people not pre-selected to put forth the same effort doesn't seem like a good gamble to take.
+

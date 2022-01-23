@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       959bc6c3-d252-43c2-b62c-484ab0681a7a
+:END:
+#+title: vscode
+

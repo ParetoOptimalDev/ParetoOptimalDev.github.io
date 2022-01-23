@@ -1,0 +1,84 @@
+:PROPERTIES:
+:ID:       384a06c2-9e73-41e4-ab7c-e6207f9d1907
+:END:
+#+title: Pareto Optimality and software development
+
+Some may want to skip to [[id:ccdb6f53-e831-4d71-a3f6-eb71c47a8110][examples of considering pareto optimality in software development]]
+
+* context
+#+begin_quote
+In brief, Pareto optimal solution is defined as a set of 'non-inferior' solutions in the objective space defining a boundary beyond which none of the objectives can be improved without sacrificing at least one of the other objectives - https://www.sciencedirect.com/topics/engineering/pareto-optimality
+#+end_quote
+
+In the context of software development, you'll frequently hear about tradeoffs such as the adage:
+
+#+begin_quote
+"Good. Fast. Cheap. Pick two." - Larry Wall
+#+end_quote
+
+As well as adages or approaches such as:
+
+- [[id:4cf7ba2e-e038-424d-bb78-51381cdeb2e2][worse is better]]
+- [[id:2e438a1a-3440-4af3-9ed7-ba473be1e926][keep it simple stupid]]
+
+This leads one of the [[id:a5d4fd74-7a97-4988-bd38-b80d2deaf94b][major cognitive biases in software development]] where people speak of tradeoffs without establishing they are Pareto Optimal, and wrongly arriving at the conclusion "nothing more can be done without a huge effort".
+
+With much effort I'll tap into my [[id:c4ecd021-4c4e-44b4-b44d-1c50d5bd362c][Principle of Charity]] and assume this is out of technical ignorance and cargo-culting rather than malice or trying to [[id:eee0078f-026d-4104-a7b0-a0e993966ac2]["JUST SHIP IT!"]].
+
+* side note: technical focus to sidestep discussion of economic/ethical forces
+A quick but important side-note that for now, I'll be focusing on the deserved blame of more privileged and experienced technical decision makers to side-step the many economic and ethical issues that play into this. Of course, even those technical decision makers are beholden to even higher ups and various perverse organizational incentives. Even still, my experience has shown they usually have significant leeway to affect technological quality and culture that surrounds the context of why I talk of [[id:384a06c2-9e73-41e4-ab7c-e6207f9d1907][Pareto Optimality and software development]] together.
+* So what is Pareto Optimality?
+** What is it?
+So uhh... yeah... what exactly was Pareto Optimality again? Drawing from [[id:bf6e0a46-d764-46f9-b22a-e06d68fd0af1][the original quote that got me thinking about pareto optimality and software development]] we get the quote:
+
+#+begin_quote
+in short, Pareto-optimal means that if you are optimizing between two quantities, you can not increase one without decreasing the other. You can draw a boundary between "all of X, none of Y" and "none of X, all of Y" that has certain characteristics...
+#+end_quote
+
+And then making things a little more concrete and tying into how not considering Pareto Optimality is a [[id:a5d4fd74-7a97-4988-bd38-b80d2deaf94b][major cognitive biases in software development]]:
+
+#+begin_quote
+... one very common cognitive mistake people in general make is to speak of a "tradeoff" between X and Y without taking the time to first establish that they are Pareto optimal, because if you're not yet Pareto optimal, that mean that you can in fact have more of X without having less of Y yet, and constraining the discussion to "tradeoffs" is introducing a false premise. 
+#+end_quote
+** Security vs Convenience phone lockscreen example
+And as an example for "security vs convenience" you could imagine:
+
+- I have a pattern on my phone lockscreen for good security with low cost to convenience
+- I have an 8 digit pin on my phone lockscreen for better security at a higher cost of convenience
+- I have neither a pin nor pattern on my lockscreen for convenience
+
+Then with that context, reflect upon this quote:
+
+#+begin_quote
+A real world example is "security vs. convenience"; the vast bulk of real-world situations in which we putatively have this conversation, we could in fact have more of either without affecting the other, because we should be so lucky as to be on the Pareto optimality line.
+#+end_quote
+
+** Bob likes convienence, not Pareto Optimality
+
+With just the phone lockscreen example, we can't quite give a good example. Let's broaden to phone security and construct a dialogue between two people talking about phone security:
+
+Jill: Bob, you should enable automatic updates for better security.
+Bob: I prefer convenience to security, that's why I neither have a lock screen nor have automatic updates enabled.
+
+Here Bob has ignored Pareto Optimality for the context of phone security and convenience because he could enable automatic updates at no (well little) cost to convenience and keep using his phone without a lockscreen.
+
+Or filling in =X= and =Y= from the earlier quote:
+
+#+begin_quote
+common cognitive mistake people in general make is to speak of a "tradeoff" between X and Y without taking the time to first establish that they are Pareto optimal, because if you're not yet Pareto optimal, that mean that you can in fact have more of X without having less of Y yet, and constraining the discussion to "tradeoffs" is introducing a false premise. 
+#+end_quote
+
+we get:
+
+#+begin_quote
+common cognitive mistake people in general make is to speak of a "tradeoff" between =Security= and =Convenience= without taking the time to first establish that they are Pareto optimal, because if you're not yet Pareto optimal, that means that you can in fact have more of =Security= without having less of =Convenience= yet, and constraining the discussion to "tradeoffs" is introducing a false premise. 
+#+end_quote
+
+*** Meta: A less contrived example would be awesome!
+
+**** critics of [[id:384a06c2-9e73-41e4-ab7c-e6207f9d1907][Pareto Optimality and software development]] and/or advocates of [[id:4cf7ba2e-e038-424d-bb78-51381cdeb2e2][worse is better]] might argue any example would be contrived
+
+***** to try and [[id:52376812-2211-4a82-b546-321b7661d225][counteract my cognitive biases by playing devils advocate]]
+
+** By analogy: Not considering Pareto Optimality is "just settling for worse"
+

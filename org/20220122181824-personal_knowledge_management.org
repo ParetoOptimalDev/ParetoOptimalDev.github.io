@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       bb31de5d-52f2-4cc6-a58c-dbb6722f5a7c
+:END:
+#+title: Personal Knowledge Management
+

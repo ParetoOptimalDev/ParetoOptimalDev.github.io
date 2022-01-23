@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       9a2b5d98-d007-4505-b736-591e5b5ec2c8
+:END:
+#+title: Evergreen Notes
+
+#+begin_quote
+Evergreen notes are written and organized to evolve, contribute, and accumulate over time, across projects. This is an unusual way to think about writing notes: Most people take only transient notes. That’s because these practices aren’t about writing notes; they’re about effectively developing insight: “Better note-taking” misses the point; what matters is “better thinking”. When done well, these notes can be quite valuable: Evergreen note-writing as fundamental unit of knowledge work.
+#+end_quote
+
+https://notes.andymatuschak.org/Evergreen_notes

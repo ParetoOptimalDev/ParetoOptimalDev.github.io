@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       2e438a1a-3440-4af3-9ed7-ba473be1e926
+:END:
+#+title: keep it simple stupid
+

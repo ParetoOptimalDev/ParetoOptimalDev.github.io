@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       92821dd5-43da-4918-96fc-7be8778009ab
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :categories '("Haskell")
+:END:
+#+title: "Simple Haskell" can result in simple code but complex codebases
+#+filetags: :seed:
+
+
+* Related
+
+** [[id:e87d8f66-b3a7-4a53-845e-620c50f11c5b][Prefer macro-level simplicity even if it means micro-level complexity]]
+
+** [[id:25626fcc-e67b-4b44-be44-92d28f244bef][Haskell]]

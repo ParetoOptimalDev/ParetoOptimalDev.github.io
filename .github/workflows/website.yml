@@ -1,0 +1,95 @@
+name: Build website
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - actions
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Generate dotenv file
+        run: |
+          cat <<EOF | tee -a .env.default
+          HUGO_VERSION=0.88.1
+          EMACS_VERSION=28.0.50
+          NODE_VERSION=14
+          EOF
+          owner="${{ github.repository_owner }}"
+          repo="$(awk -F / '{print $2}' <<< "${{ github.repository }}")"
+          repo_url="${GITHUB_SERVER_URL%/}/${GITHUB_REPOSITORY#/}"
+          if ! grep -qE '^HUGO_BASEURL=' .env.final; then echo "HUGO_BASEURL=https://paretooptimaldev.github.io/" | tee -a .env.final; fi
+          if ! grep -qE '^HUGO_PARAMS_SOURCEREPOURL=' .env.final; then echo HUGO_PARAMS_SOURCEREPOURL="$repo_url" | tee -a .env.final; fi
+          if ! grep -qE '^DOMAIN=' .env.final; then echo "DOMAIN=$(awk -F / '/^HUGO_BASEURL=/ {print $3}' .env.final | tail -n1)" | tee -a .env.final; fi
+        env:
+          DOTENV: ${{ secrets.DOTENV }}
+          BASEURL: ${{ secrets.BASEURL }}
+
+      - uses: c-py/action-dotenv-to-setenv@v2
+        with:
+          env-file: .env.final
+
+      - name: show env final
+        run: cat .env.final
+
+      - name: remove .emacs.d and public to try and fix issue with org id location file
+        run: make clean
+
+      - uses: purcell/setup-emacs@v3.0
+        with:
+          version: snapshot
+
+      - name: Cache emacs dependencies
+        uses: actions/cache@v2
+        with:
+          path: .emacs.d
+          key: ${{ runner.os }}-emacs-${{ steps.env.outputs.EMACS_VERSION }}-${{ hashFiles('**/*.el') }}
+          restore-keys: |
+            ${{ runner.os }}-emacs-${{ steps.env.outputs.EMACS_VERSION }}-
+
+      - name: Setup hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: latest
+          extended: true
+
+      - name: Cache hugo modules
+        uses: actions/cache@v2
+        with:
+          path: /tmp/hugo_cache
+          key: ${{ runner.os }}-hugomod-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-hugomod-
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        # Not able to specify latest node. https://github.com/actions/setup-node/issues/257
+        with:
+          node-version: 14
+
+      - name: Cache node dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Build
+        run: make release
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
