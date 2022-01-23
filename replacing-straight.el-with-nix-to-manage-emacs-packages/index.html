@@ -30,58 +30,58 @@ The simple case straight.el configuration early-init.el
 <h3 id=straight-dot-el-configuration>straight.el configuration</h3>
 <h4 id=early-init-dot-el>early-init.el</h4>
 <p><a id=code-snippet--5TUXxrmRSkzfKYZbaSgh4E></a></p>
-<div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-emacs-lisp data-lang=emacs-lisp><span style=color:#000;font-weight:700>(</span><span style=color:#204a87>setq</span> <span style=color:#000>package-enable-at-startup</span> <span style=color:#000>nil</span><span style=color:#000;font-weight:700>)</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-emacs-lisp data-lang=emacs-lisp>(setq package-enable-at-startup <span style=color:#66d9ef>nil</span>)
 </code></pre></div><h4 id=init-dot-el>init.el</h4>
 <p><a id=code-snippet--4NEgwbQ5iedSrkR3uqQfoy></a></p>
-<div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-emacs-lisp data-lang=emacs-lisp>  <span style=color:#000;font-weight:700>(</span><span style=color:#204a87>defvar</span> <span style=color:#000>bootstrap-version</span><span style=color:#000;font-weight:700>)</span>
-  <span style=color:#000;font-weight:700>(</span><span style=color:#204a87>let</span> <span style=color:#000;font-weight:700>((</span><span style=color:#000>bootstrap-file</span>
-	 <span style=color:#000;font-weight:700>(</span><span style=color:#000>expand-file-name</span> <span style=color:#4e9a06>&#34;straight/repos/straight.el/bootstrap.el&#34;</span> <span style=color:#000>user-emacs-directory</span><span style=color:#000;font-weight:700>))</span>
-	<span style=color:#000;font-weight:700>(</span><span style=color:#000>bootstrap-version</span> <span style=color:#0000cf;font-weight:700>5</span><span style=color:#000;font-weight:700>))</span>
-    <span style=color:#000;font-weight:700>(</span><span style=color:#204a87>unless</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>file-exists-p</span> <span style=color:#000>bootstrap-file</span><span style=color:#000;font-weight:700>)</span>
-      <span style=color:#000;font-weight:700>(</span><span style=color:#204a87>with-current-buffer</span>
-	  <span style=color:#000;font-weight:700>(</span><span style=color:#000>url-retrieve-synchronously</span>
-	   <span style=color:#4e9a06>&#34;https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el&#34;</span>
-	   <span style=color:#4e9a06>&#39;silent</span> <span style=color:#4e9a06>&#39;inhibit-cookies</span><span style=color:#000;font-weight:700>)</span>
-	<span style=color:#000;font-weight:700>(</span><span style=color:#000>goto-char</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>point-max</span><span style=color:#000;font-weight:700>))</span>
-	<span style=color:#000;font-weight:700>(</span><span style=color:#000>eval-print-last-sexp</span><span style=color:#000;font-weight:700>)))</span>
-    <span style=color:#000;font-weight:700>(</span><span style=color:#000>load</span> <span style=color:#000>bootstrap-file</span> <span style=color:#000>nil</span> <span style=color:#4e9a06>&#39;nomessage</span><span style=color:#000;font-weight:700>))</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-emacs-lisp data-lang=emacs-lisp>  (defvar bootstrap-version)
+  (let ((bootstrap-file
+	 (<span style=color:#a6e22e>expand-file-name</span> <span style=color:#e6db74>&#34;straight/repos/straight.el/bootstrap.el&#34;</span> user-emacs-directory))
+	(bootstrap-version <span style=color:#ae81ff>5</span>))
+    (unless (<span style=color:#a6e22e>file-exists-p</span> bootstrap-file)
+      (with-current-buffer
+	  (url-retrieve-synchronously
+	   <span style=color:#e6db74>&#34;https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el&#34;</span>
+	   <span style=color:#e6db74>&#39;silent</span> <span style=color:#e6db74>&#39;inhibit-cookies</span>)
+	(<span style=color:#a6e22e>goto-char</span> (<span style=color:#a6e22e>point-max</span>))
+	(eval-print-last-sexp)))
+    (<span style=color:#a6e22e>load</span> bootstrap-file <span style=color:#66d9ef>nil</span> <span style=color:#e6db74>&#39;nomessage</span>))
 
-<span style=color:#000;font-weight:700>(</span><span style=color:#204a87>setq</span> <span style=color:#000>straight-use-package-by-default</span> <span style=color:#000>t</span><span style=color:#000;font-weight:700>)</span>
+(setq straight-use-package-by-default <span style=color:#66d9ef>t</span>)
 
-<span style=color:#000;font-weight:700>(</span><span style=color:#000>straight-use-package</span> <span style=color:#4e9a06>&#39;use-package</span><span style=color:#000;font-weight:700>)</span>
+(straight-use-package <span style=color:#e6db74>&#39;use-package</span>)
 
-<span style=color:#000;font-weight:700>(</span><span style=color:#204a87>use-package</span> <span style=color:#000>magit</span><span style=color:#000;font-weight:700>)</span>
+(use-package magit)
 
 </code></pre></div><h3 id=nix-configuration>nix configuration</h3>
 <h4 id=early-init-dot-el>early-init.el</h4>
 <p><a id=code-snippet--5TUXxrmRSkzfKYZbaSgh4E></a></p>
-<div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-emacs-lisp data-lang=emacs-lisp><span style=color:#000;font-weight:700>(</span><span style=color:#204a87>setq</span> <span style=color:#000>package-enable-at-startup</span> <span style=color:#000>nil</span><span style=color:#000;font-weight:700>)</span>
-<span style=color:#8f5902;font-style:italic>;; let&#39;s be really sure package.el isn&#39;t used</span>
-<span style=color:#000;font-weight:700>(</span><span style=color:#204a87>setq</span> <span style=color:#000>use-package-ensure-function</span> <span style=color:#4e9a06>&#39;ignore</span><span style=color:#000;font-weight:700>)</span>
-<span style=color:#000;font-weight:700>(</span><span style=color:#204a87>setq</span> <span style=color:#000>package-archives</span> <span style=color:#000>nil</span><span style=color:#000;font-weight:700>)</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-emacs-lisp data-lang=emacs-lisp>(setq package-enable-at-startup <span style=color:#66d9ef>nil</span>)
+<span style=color:#75715e>;; let&#39;s be really sure package.el isn&#39;t used</span>
+(setq use-package-ensure-function <span style=color:#e6db74>&#39;ignore</span>)
+(setq package-archives <span style=color:#66d9ef>nil</span>)
 </code></pre></div><h4 id=configuration-dot-nix>configuration.nix</h4>
-<div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nix data-lang=nix><span style=color:#000;font-weight:700>{</span> <span style=color:#000>config</span><span style=color:#ce5c00;font-weight:700>,</span> <span style=color:#000>pkgs</span><span style=color:#ce5c00;font-weight:700>,</span> <span style=color:#ce5c00;font-weight:700>...</span> <span style=color:#000;font-weight:700>}:</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nix data-lang=nix>{ config<span style=color:#f92672>,</span> pkgs<span style=color:#f92672>,</span> <span style=color:#f92672>...</span> }:
 
-<span style=color:#8f5902;font-style:italic># note: you can store this in an external file like the NixOS manual example as well:</span>
-<span style=color:#8f5902;font-style:italic># https://nixos.org/manual/nixos/stable/index.html#module-services-emacs-adding-packages</span>
-<span style=color:#204a87;font-weight:700>let</span> <span style=color:#000>customEmacs</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>let</span>
-      <span style=color:#000>myEmacs</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000>pkgs</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>emacs</span><span style=color:#000;font-weight:700>;</span>
-      <span style=color:#000>emacsWithPackages</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>pkgs</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>emacsPackagesFor</span> <span style=color:#000>myEmacs</span><span style=color:#000;font-weight:700>)</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>emacsWithPackages</span><span style=color:#000;font-weight:700>;</span>
-    <span style=color:#204a87;font-weight:700>in</span>
-      <span style=color:#000>emacsWithPackages</span> <span style=color:#000;font-weight:700>(</span><span style=color:#000>epkgs</span><span style=color:#000;font-weight:700>:</span> <span style=color:#000;font-weight:700>(</span><span style=color:#204a87;font-weight:700>with</span> <span style=color:#000>epkgs</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>melpaPackages</span><span style=color:#000;font-weight:700>;</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#000>magit</span> <span style=color:#000;font-weight:700>]))</span>
-<span style=color:#204a87;font-weight:700>in</span>
-<span style=color:#000;font-weight:700>{</span>
-  <span style=color:#8f5902;font-style:italic># ... other configuration</span>
+<span style=color:#75715e># note: you can store this in an external file like the NixOS manual example as well:</span>
+<span style=color:#75715e># https://nixos.org/manual/nixos/stable/index.html#module-services-emacs-adding-packages</span>
+<span style=color:#66d9ef>let</span> customEmacs <span style=color:#f92672>=</span> <span style=color:#66d9ef>let</span>
+      myEmacs <span style=color:#f92672>=</span> pkgs<span style=color:#f92672>.</span>emacs;
+      emacsWithPackages <span style=color:#f92672>=</span> (pkgs<span style=color:#f92672>.</span>emacsPackagesFor myEmacs)<span style=color:#f92672>.</span>emacsWithPackages;
+    <span style=color:#66d9ef>in</span>
+      emacsWithPackages (epkgs: (<span style=color:#66d9ef>with</span> epkgs<span style=color:#f92672>.</span>melpaPackages; [ magit ]))
+<span style=color:#66d9ef>in</span>
+{
+  <span style=color:#75715e># ... other configuration</span>
 
- <span style=color:#000>environment</span><span style=color:#ce5c00;font-weight:700>.</span><span style=color:#000>systemPackages</span> <span style=color:#ce5c00;font-weight:700>=</span> <span style=color:#204a87;font-weight:700>with</span> <span style=color:#000>pkgs</span><span style=color:#000;font-weight:700>;</span> <span style=color:#000;font-weight:700>[</span>
-   <span style=color:#8f5902;font-style:italic># ... other packages</span>
-   <span style=color:#000>myEmacs</span>
- <span style=color:#000;font-weight:700>];</span>
-  <span style=color:#8f5902;font-style:italic># ... other configuration</span>
-<span style=color:#000;font-weight:700>}</span>
+ environment<span style=color:#f92672>.</span>systemPackages <span style=color:#f92672>=</span> <span style=color:#66d9ef>with</span> pkgs; [
+   <span style=color:#75715e># ... other packages</span>
+   myEmacs
+ ];
+  <span style=color:#75715e># ... other configuration</span>
+}
 </code></pre></div><h4 id=init-dot-el>init.el</h4>
 <p><a id=code-snippet--A7YuReYJGxh57uVkvBKbnd></a></p>
-<div class=highlight><pre tabindex=0 style=background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-emacs-lisp data-lang=emacs-lisp><span style=color:#000;font-weight:700>(</span><span style=color:#204a87>use-package</span> <span style=color:#000>magit</span><span style=color:#000;font-weight:700>)</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-emacs-lisp data-lang=emacs-lisp>(use-package magit)
 </code></pre></div><h2 id=install-source-version-of-a-package>Install source version of a package</h2>
 <h3 id=using-straight-dot-el>using straight.el</h3>
 <h3 id=using-nix>using nix</h3>
