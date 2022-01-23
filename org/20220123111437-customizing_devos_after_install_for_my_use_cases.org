@@ -14,6 +14,8 @@ bud rebuild $yourHostName switch
 
 [[id:738c41e1-7312-4125-94a7-ce5489df77b7][issues with DevOS]] can be annoying, I know this is due to a previous workaround for direnv because of rapid development of [[id:173db361-be2d-41f1-9d24-45a600d5838b][Nix flakes]] while it's not in [[id:4d24c424-8b8b-4f35-97eb-ed8eee51f8ec][NixOS]] by default.
 
+There's actually an issue to track this currently at [[https://github.com/divnix/devos/issues/415][divnix/devos#415]] that I linked to in my commit fixing this.
+
 In =overlays/overrides.nix=:
 
 #+begin_src diff
@@ -28,6 +30,21 @@ In =overlays/overrides.nix=:
      (old: {
        overrides = prev.lib.composeExtensions (old.overrides or (_: _: { })) (hfinal: hprev:
 #+end_src
+
+I feel like it'd be nice for their CI to check for failures like this.
+
+I see there is a failure [[https://github.com/divnix/devos/runs/4780067764?check_suite_focus=true#step:5:636][in their CI]] though of:
+
+#+name: ju7nNtVNoorfiQ6GmFQtDH
+#+begin_example
+ building '/nix/store/vibnw03hyg3cqw52fny26mslchkprwp8-hm_direnvdirenvrc.drv'...
+error: unexpected end-of-file
+Error: Process completed with exit code 1.
+#+end_example
+
+I guess they do test this, but knowing that error means "direnv updated so we can stop using our override" seems pretty tough for anyone but core contributors to notice.
+
+Perhaps the fix would be preventing merges until CI checks pass, though that can be tricky in open source where people are already volunteering their free time and you don't want to annoy them.
 
 * Now that we can successfully rebuild, time to configure!
 
