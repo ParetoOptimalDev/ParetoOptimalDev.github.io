@@ -1,4 +1,4 @@
-baseURL = "https://paretooptimaldev.github.io/"
+baseURL = "https://www.paretooptimal.dev"
 languageCode = "en-us"
 title = "Pareto Optimal Dev"
 theme = "cortex"
