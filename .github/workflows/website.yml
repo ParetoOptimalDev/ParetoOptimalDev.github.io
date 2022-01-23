@@ -27,7 +27,7 @@ jobs:
           owner="${{ github.repository_owner }}"
           repo="$(awk -F / '{print $2}' <<< "${{ github.repository }}")"
           repo_url="${GITHUB_SERVER_URL%/}/${GITHUB_REPOSITORY#/}"
-          if ! grep -qE '^HUGO_BASEURL=' .env.final; then echo "HUGO_BASEURL=https://paretooptimaldev.github.io/" | tee -a .env.final; fi
+          if ! grep -qE '^HUGO_BASEURL=' .env.final; then echo "HUGO_BASEURL=https://www.paretooptimal.dev/" | tee -a .env.final; fi
           if ! grep -qE '^HUGO_PARAMS_SOURCEREPOURL=' .env.final; then echo HUGO_PARAMS_SOURCEREPOURL="$repo_url" | tee -a .env.final; fi
           if ! grep -qE '^DOMAIN=' .env.final; then echo "DOMAIN=$(awk -F / '/^HUGO_BASEURL=/ {print $3}' .env.final | tail -n1)" | tee -a .env.final; fi
         env:
