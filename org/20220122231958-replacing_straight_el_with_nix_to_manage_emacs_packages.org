@@ -11,7 +11,6 @@ In short, for better reproducability and to free me from manual intervention bec
 For more details you can see my history of =package.el -> straight.el -> Nix= for managing [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] packages in [[id:8924b05d-a97d-4507-93ec-0cb3a1d3af5e][Package management and configuration in emacs]].
 
 * The simple case
-
 ** straight.el configuration
 *** early-init.el
 
@@ -45,7 +44,8 @@ For more details you can see my history of =package.el -> straight.el -> Nix= fo
 
 #+end_src
 ** nix configuration
-*** early-init.el
+*** From NixOS
+**** early-init.el
 
 #+name: 5TUXxrmRSkzfKYZbaSgh4E
 #+begin_src emacs-lisp
@@ -55,7 +55,7 @@ For more details you can see my history of =package.el -> straight.el -> Nix= fo
   (setq package-archives nil)
 #+end_src
 
-*** configuration.nix
+**** configuration.nix
 
 #+begin_src nix
   { config, pkgs, ... }:
@@ -78,18 +78,35 @@ For more details you can see my history of =package.el -> straight.el -> Nix= fo
     # ... other configuration
   }
 #+end_src
-*** init.el
+**** init.el
 #+name: A7YuReYJGxh57uVkvBKbnd
 #+begin_src emacs-lisp
   (use-package magit)
 #+end_src
+*** Using another distro with [[https://nixos.org/download.html][Nix: the package manager]]
 
+TODO
+*** From [[https://devos.divnix.com/][DevOS (nix flake configuration framework)]]
+
+TODO
 
 * Install source version of a package
 
 ** using straight.el
 
 ** using nix
+
+*** From NixOS
+
+TODO
+
+*** Using another distro with [[https://nixos.org/download.html][Nix: the package manager]]
+
+TODO
+
+*** From [[https://devos.divnix.com/][DevOS (nix flake configuration framework)]]
+
+TODO
 
 * Downsides of using Nix emacs packages
 
