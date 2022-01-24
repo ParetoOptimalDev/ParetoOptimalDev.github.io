@@ -1,0 +1,41 @@
+:PROPERTIES:
+:ID:       94449c7e-1ba5-4cac-a16b-339e0d4c0a27
+:END:
+#+title: Discoverable Emacs configuration for beginners based on Object->Action
+
+
+This idea hit me while reading [[https://karthinks.com/software/fifteen-ways-to-use-embark/][Fifteen ways to use embark]] when I realized how much easier having access to =embark-act= could make things for beginners.
+
+This idea was furthered when reading the reddit thread about [[https://www.reddit.com/r/emacs/comments/s6umyd/discoverablity_2_use_contextmenumode_since_281/][Discoverablity 2: Use context-menu-mode (since 28.1)...]].
+
+Then other updates from Nicolas Rougier of Elegant Emacs that aims to clean up the emacs theme and UI had a couple posts that I thought of as being useful for this beginner configuration:
+
+- [[https://www.reddit.com/r/emacs/comments/rr2gtj/svgtagmode_v_031_is_now_on_elpa/][svg-tag-mode (v 0.3.1) is now on ELPA]]
+- [[https://www.reddit.com/r/emacs/comments/rkgyqj/org_notebook_alternative_design_code/][Org notebook (alternative design & code)]]
+- [[https://www.reddit.com/r/emacs/comments/q7963w/n%CE%BBno_agenda_is_on_elpa/][NΛNO agenda is on ELPA]]
+- [[https://www.reddit.com/r/emacs/comments/q2204l/n%CE%BBno_theme_is_on_elpa/][NΛNO theme is on ELPA]]
+
+All of these ideas together make me envision an [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] configuration whose:
+
+- UI is based on all of the great NΛNO stuff that should be friendly if not enticing to newcomers
+- User is encouraged to use right click for context-specific help as much as possible
+- User is encouraged to use =C-.= (embark-act) as much as possible
+- Encouraged to use the help, but given an omni-search of =C-h f=, =C-h v=
+
+Then the very active [[https://www.reddit.com/r/emacs/comments/s4za7y/emacs_discoverability/][Emacs discoverability]] reddit post about emacs configurations aimed at beginners turning off the toolbar which aids in discoverability. Is it context specific? Either way, a plan would be to keep it by default but give it a redesign in the spirit of the NΛNO theme (Note: Is Nicolas Rougier working on this or perhaps interested?).
+
+Then the typical additions, but stripped down to not have overwhelming information:
+
+- which-key, perhaps bindings recommended ordered by "most used in community"
+- strip down embark actions, categorize them, or otherwise add hierarchy to prevent overwhelm
+
+And other ideas:
+
+- keyfreq configured by default, and some nice tutorial/wrapper to encourage them to improve their bindings/process
+- alert.el for all notifications by default (Note: will this require users installing a notification library?)
+- pdf-tools added by default along with maybe a wrapper mode that guides users to easily taking notes/annotating
+- Encourage use of org-roam dailies to casually start developing their knowledge?
+
+Other important questions:
+
+- How can you bridge the gap between beginner and motivating starting to more deeply understand/customize [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] in a way that helps the user accomplish their goals (maybe [[id:77c69af4-91c3-490f-abde-601d48677a07][Literature: Emacs: from catching up to getting ahead - r/emacs]] could help here?)

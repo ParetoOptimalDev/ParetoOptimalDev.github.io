@@ -2,7 +2,7 @@
 :ID:       685867bd-b6e9-4a23-a1ff-decfc0591a68
 :END:
 #+title: Which Haskell database library manages complexity best in 2022?
-
+#+PROPERTY: header-args:sql :engine postgresql
 
 #+begin_quote
 Now that I've used Esqueleto professionally in anger, I would understand anyone who used it and then swore off static types forever. - @ttuegel
@@ -19,10 +19,377 @@ I had the thought on a mentally slow day where I was struggling to line up types
 
 This is my exploration to see if using a complex (rather than simple) example if Esqueleto.Experimental is still the simplest.
 
+Note that I'll use Microsoft's northwind database as an example since it's pretty widely known. If you use [[id:4d24c424-8b8b-4f35-97eb-ed8eee51f8ec][NixOS]] you might be interested in [[id:ffd172ca-935b-4089-bc9a-1d7024365b1a][Provisioning a sample database along with postgres in nixos]].
+
 * Real-world example with some complexity
+  :PROPERTIES:
+  :header-args:    :engine postgresql :dbport 5435 :database northwind :dbuser postgres
+  :END:
+
+** Typical complexity: Get most expensive product bought in a given order
+
+Modifying a string, inner joins across a couple tables, and an aggregation.
+
+#+begin_src sql
+  select column_name, data_type, character_maximum_length, column_default, is_nullable
+  from INFORMATION_SCHEMA.COLUMNS where table_name = 'orders';
+#+end_src
+
+#+RESULTS:
+| column_name      | data_type         | character_maximum_length | column_default | is_nullable |
+|------------------+-------------------+--------------------------+----------------+-------------|
+| order_id         | smallint          |                          |                | NO          |
+| customer_id      | character         |                          |                | YES         |
+| employee_id      | smallint          |                          |                | YES         |
+| order_date       | date              |                          |                | YES         |
+| required_date    | date              |                          |                | YES         |
+| shipped_date     | date              |                          |                | YES         |
+| ship_via         | smallint          |                          |                | YES         |
+| freight          | real              |                          |                | YES         |
+| ship_name        | character varying |                       40 |                | YES         |
+| ship_address     | character varying |                       60 |                | YES         |
+| ship_city        | character varying |                       15 |                | YES         |
+| ship_region      | character varying |                       15 |                | YES         |
+| ship_postal_code | character varying |                       10 |                | YES         |
+| ship_country     | character varying |                       15 |                | YES         |
+
+#+begin_src sql
+  select column_name, data_type, character_maximum_length, column_default, is_nullable
+  from INFORMATION_SCHEMA.COLUMNS where table_name = 'order_details';
+#+end_src
+
+#+RESULTS:
+| column_name | data_type | character_maximum_length | column_default | is_nullable |
+|-------------+-----------+--------------------------+----------------+-------------|
+| order_id    | smallint  |                          |                | NO          |
+| product_id  | smallint  |                          |                | NO          |
+| unit_price  | real      |                          |                | NO          |
+| quantity    | smallint  |                          |                | NO          |
+| discount    | real      |                          |                | NO          |
+
+
+
+#+begin_src sql
+  select upper(o.ship_name), max(p.unit_price) as expensivest
+  from orders o
+  inner join order_details od on od.order_id = o.order_id
+  inner join products p on p.product_id = od.product_id
+  group by o.ship_name
+  order by expensivest desc
+  limit 5
+#+end_src
+
+#+RESULTS:
+| upper                      | expensivest |
+|----------------------------+-------------|
+| THE BIG CHEESE             |       263.5 |
+| KÖNIGLICH ESSEN            |       263.5 |
+| MÈRE PAILLARDE             |       263.5 |
+| RATTLESNAKE CANYON GROCERY |       263.5 |
+| SPLIT RAIL BEER & ALE      |       263.5 |
+
 
 * Esqueleto
 
-* Beam
+** define models and enable extensions
+
+#+begin_src haskell :tangle Models.hs :eval no
+  {-# LANGUAGE TypeFamilies #-}
+  {-# LANGUAGE GADTs #-}
+  {-# LANGUAGE DerivingStrategies #-}
+  {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+  {-# LANGUAGE StandaloneDeriving #-}
+  {-# LANGUAGE UndecidableInstances #-}
+  {-# LANGUAGE DataKinds #-}
+  {-# LANGUAGE FlexibleInstances #-}
+  {-# LANGUAGE MultiParamTypeClasses #-}
+  {-# LANGUAGE OverloadedStrings #-}
+
+  module Models where
+
+  import           Database.Persist
+  import           Database.Persist.TH
+  import Data.Int
+
+  share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
+  Order sql=orders
+      Id sql=order_id
+      shipName String
+      deriving Show
+  OrderDetail sql=order_details
+      Id (Key OrderId) sql=order_id
+      productId Int64
+      deriving Show
+  Product sql=products
+      ProductId sql=product_id 
+      unitPrice Double
+  |]
+
+#+end_src
+
+#+begin_src haskell :session esqueleto :results silent
+:l Models
+#+end_src
+
+** now try simply querying a table
+
+*** a few more extensions and imports apparently
+
+#+begin_src haskell :session esqueleto :results silent
+:set -XOverloadedStrings
+#+end_src
+
+#+begin_src haskell :session esqueleto :results silent
+:set -XTypeApplications
+#+end_src
+
+#+begin_src haskell :session esqueleto :results silent
+:set -XGADTs
+#+end_src
+
+#+begin_src haskell :session esqueleto :results silent
+:set -XFlexibleContexts
+#+end_src
+
+#+begin_src haskell :session esqueleto :results silent
+:set +m
+#+end_src
+
+#+begin_src haskell :session esqueleto :results silent
+import Database.Persist.Postgresql
+#+end_src
+
+#+begin_src haskell :session esqueleto
+:t selectList @Orders [] []
+#+end_src
+
+#+RESULTS:
+: <interactive>:1:13-18: error:
+:     Not in scope: type constructor or class ‘Orders’
+:     Perhaps you meant ‘Order’ (imported from Rel8)
+
+#+begin_src haskell :session esqueleto :results silent
+import Control.Monad.Reader
+#+end_src
+#+begin_src haskell :session esqueleto :results silent
+import Control.Monad.Reader
+#+end_src
+
+#+begin_src haskell :session esqueleto :results silent
+import Control.Monad.Logger                                        
+#+end_src
+
+#+begin_src haskell :session esqueleto :results silent
+import Database.Esqueleto.Experimental
+#+end_src
+
+#+begin_src haskell :session esqueleto :results silent
+import qualified Database.Esqueleto.Experimental as E
+#+end_src
+
+
+
+
+
+*** a =runDB= helper
+
+#+begin_src haskell :session esqueleto :results silent
+runDB = runStdoutLoggingT . withPostgresqlConn "port=5435 dbname=northwind user=postgres" . runReaderT
+#+end_src
+
+
+*** and now the query with persistent
+
+#+begin_src haskell :session esqueleto
+runDB $ selectList @Orders [] [LimitTo 1]
+#+end_src
+
+#+RESULTS:
+: <interactive>:65:21-26: error:
+:     Not in scope: type constructor or class ‘Orders’
+:     Perhaps you meant one of these:
+:       ‘Order’ (imported from Rel8),
+:       ‘OrderBy’ (imported from Database.Esqueleto.Experimental)
+
+*** then the simple query with esqueleto
+
+#+begin_src haskell :session esqueleto
+  :{
+  runDB $ select $ do
+          orders <- from $ table @Orders
+          limit 1
+          pure orders
+  :}
+#+end_src
+
+** Now let's write [[*Typical complexity: Get most expensive product bought in a given order][Typical complexity: Get most expensive product bought in a given order]] with Esqueleto
+
+#+begin_src haskell :session esqueleto
+:t OrderDetail
+#+end_src
+
+#+RESULTS:
+: <interactive>:1:1-11: error:
+:     Data constructor not in scope: OrderDetail
+
+
+#+begin_src haskell :session esqueleto
+  :{
+  runDB $ select $ do
+    (order :& orderDetail) <- do
+      from $ table @Order
+        `innerJoin` table @OrderDetail
+        `on` (\(order :& orderDetail) ->
+                 orderDetail ^. OrderDetailId E.==. order ^. OrderId)
+    limit 1
+    pure (order, orderDetail)
+    :}
+#+end_src
+
+TODO HERE I'm stuck because of a template haskell bug I think, posted issue here https://github.com/yesodweb/persistent/issues/1353
+
+
+* Beam (not building on nixos)
 
 * rel8
+
+** load the models
+
+#+begin_src haskell :session rel8
+:l rel8models.hs
+#+end_src
+
+#+RESULTS:
+: [1 of 1]
+
+
+** try simple query
+
+*** tons of imports/extensions
+
+#+begin_src haskell :session rel8 :results silent
+:set +m
+#+end_src
+
+#+begin_src haskell session rel8 :results silent
+:set -XOverloadedStrings
+#+end_src
+
+#+begin_src haskell :session rel8 :results silent
+  Right conn <- acquire "user=postgres port=5435 dbname=northwind"
+#+end_src
+
+#+begin_src haskell session rel8 :results silent
+  import Hasql.Transaction (statement)
+#+end_src
+
+#+begin_src haskell session rel8  :results silent
+import Hasql.Transaction.Sessions (transaction, Mode(Write), IsolationLevel(ReadCommitted))
+#+end_src
+
+#+begin_src haskell session rel8 :results silent
+import Hasql.Connection (acquire)
+#+end_src
+
+#+begin_src haskell session rel8 :results silent
+import Hasql.Session (run)
+#+end_src
+
+#+begin_src haskell session rel8 :results silent
+import Rel8
+#+end_src
+
+*** simple query
+
+#+begin_src haskell :session rel8 
+  :{
+  (flip run conn) $ do
+    transaction ReadCommitted Write $ do 
+        statement () $ do
+          select $ limit 1 $ do
+            each orderSchema
+  :}
+#+end_src
+
+#+RESULTS:
+: Right [Order {orderId = 10248, shipName = "Vins et alcools Chevalier"}]
+
+***  query with a join
+
+#+begin_src haskell :session rel8 
+  :{
+  (flip run conn) $ do
+    transaction ReadCommitted Write $ do 
+        statement () $ do
+          select $ limit 5 $ do
+            order <- each orderSchema
+            orderDetail <- each orderDetailsSchema
+            products <- each productsSchema
+            where_ $ orderId order ==. orderDetailsId orderDetail &&. productsId products ==.  orderProductId orderDetail
+            return $ do
+              maxPrice <- Rel8.max (productUnitPrice products)
+              return (shipName order, maxPrice)
+  :}
+#+end_src
+
+Currently above incorrect, might want:
+
+https://hackage.haskell.org/package/rel8-1.0.0.0/docs/Rel8.html#v:listAgg
+
+also useful:
+
+https://github.com/mitchellwrosen/cpe365-in-haskell/blob/f54662a1f5dfc81c530a2000946697325c28d2ce/Cpe365.hs
+
+#+RESULTS:
+#+begin_example
+<interactive>:(763,9)-(770,45): error:
+    • Couldn't match type ‘Aggregate (Expr Text, Int64)’
+                     with ‘(Expr (Expr Text), Expr Int64)’
+        arising from a use of ‘select’
+    • In a stmt of a 'do' block:
+        select
+          $ limit 5
+              $ do order <- each orderSchema
+                   orderDetail <- each orderDetailsSchema
+                   products <- each productsSchema
+                   where_
+                     $ orderId order ==. orderDetailsId orderDetail
+                         &&. productsId products ==. orderProductId orderDetail
+                   ....
+      In the second argument of ‘($)’, namely
+        ‘do select
+              $ limit 5
+                  $ do order <- each orderSchema
+                       orderDetail <- each orderDetailsSchema
+                       ....’
+      In a stmt of a 'do' block:
+        statement ()
+          $ do select
+                 $ limit 5
+                     $ do order <- each orderSchema
+                          orderDetail <- each orderDetailsSchema
+                          ....
+#+end_example
+
+
+
+** Now let's write [[*Typical complexity: Get most expensive product bought in a given order][Typical complexity: Get most expensive product bought in a given order]] with rel8
+
+
+
+#+begin_src haskell :session rel8 
+  :{
+  (flip run conn) $ do
+    transaction ReadCommitted Write $ do 
+        statement () $ do
+          select $ limit 1 $ do
+            each orderSchema
+  :}
+#+end_src
+
+
+* squeal (not on nixos)
+
+Ok... I love that this is a deep embedding but it's wayyy uglier than SQL and so damn noisy :/
+
+* re-review https://www.williamyaoh.com/posts/2019-12-14-typesafe-db-libraries.html
