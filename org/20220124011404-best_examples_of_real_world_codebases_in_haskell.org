@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       1934c1d9-cb5a-4330-83ab-3a866cc00e72
+:END:
+#+title: Best examples of real-world codebases in Haskell
+
+
+* https://github.com/typeable/octopod/
+
+* https://github.com/github/semantic
+
+* https://github.com/jgm/pandoc

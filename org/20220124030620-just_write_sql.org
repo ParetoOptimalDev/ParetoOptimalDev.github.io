@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       d9f0ce9f-df84-4769-907e-9879116e4fca
+:END:
+#+title: "Just write sql"
+

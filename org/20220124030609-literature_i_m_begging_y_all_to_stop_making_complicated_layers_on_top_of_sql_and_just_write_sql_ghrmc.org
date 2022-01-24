@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b23a4ea3-1f56-4e36-a5b6-23013254ae17
+:END:
+#+title: Literature: "I'm begging y'all to stop making complicated layers on top of SQL and just write SQL." - @ghrmc
+
+
+Basically [[id:d9f0ce9f-df84-4769-907e-9879116e4fca]["Just write sql"]]

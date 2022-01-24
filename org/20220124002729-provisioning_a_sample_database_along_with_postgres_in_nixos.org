@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       ffd172ca-935b-4089-bc9a-1d7024365b1a
+:END:
+#+title: Provisioning a sample database along with postgres in nixos
+
+TODO
