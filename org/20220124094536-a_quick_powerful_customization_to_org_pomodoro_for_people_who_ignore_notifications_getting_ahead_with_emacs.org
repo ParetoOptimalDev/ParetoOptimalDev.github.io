@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       5a07fdff-2331-4cae-8471-5d60b2d6f7e2
+:END:
+#+title: A quick powerful customization to org-pomodoro for people who ignore notifications - Getting Ahead With Emacs
+
+* New [[id:d4397481-d69c-4fc5-a3df-990cf2adad8b][Series: Getting Ahead With Emacs]]
+Inspired by the wonderful [[id:77c69af4-91c3-490f-abde-601d48677a07][Literature: Emacs: from catching up to getting ahead - r/emacs]] and to try and convince people who ask things like [[id:bedd2f19-ba7a-4680-a027-2080bd114707][Why pick emacs over vscode?]].
+
+[[id:959bc6c3-d252-43c2-b62c-484ab0681a7a][vscode]] has a lot of very smart people trying to solve very difficult issues that [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] doesn't have. What if we could make their out of the box experience good enough that they didn't run away in horror before discovering [[id:320713f1-bd46-44ad-8358-1ac606c0f64f][The true power of emacs extensibility]]?
+
+I bet we could win some of them over and improve their quality of life too, especially if it turned out to be true that [[id:c72ac410-0be0-4d3d-a961-5a7053233cba][vscode extensibility is doomed because of the "panel" abstraction]] or [[id:6087141b-68d5-4cad-bf8c-5a9047c79633][issues that would prevent me from ever switching to vscode]]
+
+It's about customizing [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] to your workflow and not getting caught up in all of the micro-level stuff. The key is to prioritize things that smooth out your most common workflows, but the problem is you might not always know that is possible or may not know how easy it is to implement.
+
+I'd tried using org-pomodoro before but found I just ignored the notifications. I asked myself why and came up with:
+
+- I didn't notice the notification in the message area most of the time
+- When I did, I kept working past notifications when I noticed them
+
+To know there was a solution I had to know about:
+
+- emacs hooks
+- know how to resume layouts
+- something else... TODO

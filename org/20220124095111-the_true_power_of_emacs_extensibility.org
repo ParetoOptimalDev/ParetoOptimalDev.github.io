@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       320713f1-bd46-44ad-8358-1ac606c0f64f
+:END:
+#+title: The true power of emacs extensibility
+
+
+This will be based on lots of notes when I get around to writing it, and lots of time spent thinking. Here's an incomplete outdated list:
+
+- [[id:5a07fdff-2331-4cae-8471-5d60b2d6f7e2][A quick powerful customization to org-pomodoro for people who ignore notifications - Getting Ahead With Emacs]]
+- [[id:94449c7e-1ba5-4cac-a16b-339e0d4c0a27][Discoverable Emacs configuration for beginners based on Object->Action]]

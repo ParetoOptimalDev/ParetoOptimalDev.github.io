@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       450477ba-4eae-4c75-8120-3c1664807ee3
+:END:
+#+title: Literature: what can I in emacs and not in vscode? - r/emacs
+
+https://www.reddit.com/r/emacs/comments/q50iqx/what_can_i_in_emacs_and_not_in_vscode/

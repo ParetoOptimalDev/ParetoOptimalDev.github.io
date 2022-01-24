@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       6087141b-68d5-4cad-bf8c-5a9047c79633
+:END:
+#+title: issues that would prevent me from ever switching to vscode
+
+* TODO I recall some specific issues being listed on r/emacs with panels and lack of customization but can't find them
+
+* Related
+** [[id:450477ba-4eae-4c75-8120-3c1664807ee3][Literature: what can I in emacs and not in vscode? - r/emacs]]
