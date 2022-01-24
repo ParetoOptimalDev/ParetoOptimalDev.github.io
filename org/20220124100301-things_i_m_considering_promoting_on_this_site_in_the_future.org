@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       fe4bbaec-b19d-4d4f-b75e-b5e109367343
+:END:
+#+title: Things I'm considering promoting on this site in the future
+
+These are all affiliate links, since I think I'm decided that if you:
+
+- Provide extremely target and high quality recommendations
+- Respect your users privacy and promote products that do the same
+
+Then it's no crime to also make money off of those recommendations, especially if it's being done to make giving more value possible or sustainable.
+
+I may try to figure out a not annoying way to recommend these on specific pages to both provide good recommendations and monetize my content.
+
+Of course I may decide against this and only do something like Patreon or liberapay, or might end up doing both.
+
+* Here's the list
+
+** Haskell
+
+*** Books I own
+
+**** [[https://www.manning.com/books/get-programming-with-haskell?utm_source=ParetoOptimalDev&utm_medium=affiliate&utm_campaign=book_kurt_get_3_16_18&a_aid=ParetoOptimalDev&a_bid=766c7388][Get Programming with Haskell]]
+
+I've used this to introduce beginners to certain Haskell topics before, but sometimes extra explanation is necessary and this book doesn't really go in depth since that's not it's aim.
+
+It's a fun whirl-wind tour though!
+
+**** [[https://www.manning.com/books/haskell-in-depth?utm_source=ParetoOptimalDev&utm_medium=affiliate&utm_campaign=book_bragilevsky_haskell_6_28_18&a_aid=ParetoOptimalDev&a_bid=3f69e5d2][Haskell in Depth]]
+
+Very good book and author is focused on good epistemology and being a good teacher. This means lots of helpful graphics along with explanations on complex subjects.
+

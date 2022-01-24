@@ -35,7 +35,39 @@ And other ideas:
 - alert.el for all notifications by default (Note: will this require users installing a notification library?)
 - pdf-tools added by default along with maybe a wrapper mode that guides users to easily taking notes/annotating
 - Encourage use of org-roam dailies to casually start developing their knowledge?
+- no-littering package by default
+- dired copy to other window by default, maybe an interactive tutorial for dired and suggest it could replace quick terminal sessions?
 
 Other important questions:
 
-- How can you bridge the gap between beginner and motivating starting to more deeply understand/customize [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] in a way that helps the user accomplish their goals (maybe [[id:77c69af4-91c3-490f-abde-601d48677a07][Literature: Emacs: from catching up to getting ahead - r/emacs]] could help here?)
+- How can you bridge the gap between beginner and motivating starting to more deeply understand/customize [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] in a way that helps the user accomplish their goals (maybe [[id:77c69af4-91c3-490f-abde-601d48677a07][Literature: Emacs: from catching up to getting ahead - r/emacs]] could help here?) Or when I get to it [[id:5a07fdff-2331-4cae-8471-5d60b2d6f7e2][A quick powerful customization to org-pomodoro for people who ignore notifications - Getting Ahead With Emacs]]
+
+Prior work to review:
+
+- [[https://www.reddit.com/r/emacs/comments/d4nilk/wakib_an_easy_to_use_emacs_starter_kit/][Wakib, an easy to use Emacs starter kit]] (This has a focus on keybindings, but I wonder if that's ultimately a negative? Perhaps start with CUA for accessibility then try to sell the value of =C-c C-c= style bindings because emacs has more contexts to need keybindings?)
+- Note, from some beginners feedback Wakib bindings aside from the typical you expect like =C-c= being copy, are just as complex as default [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] keybindings plus the overhead of being different
+
+Maybe useful:
+
+- https://www.reddit.com/r/emacs/comments/nnogg4/what_can_emacs_give_me_in_2021_a_response_to_the/
+- System Crafters emacs from scratch may help bridge the gap between beginner/motivating deeper understanding, but videos can be long from a beginner perspective
+
+Maybe useful thoughts/ideas:
+
+#+begin_quote
+The bottom line is that emacs is a not an editor, it's a platform that you can use throughout your entire life. And if your life depends heavily on computers - whether you're a writer or an entrepreneur or an accountant or a government researcher or anything else these days - emacs is a worthwhile investment because it'll pay off in the long term. - [[https://www.reddit.com/r/emacs/comments/nnogg4/comment/gzy9o9d/?utm_source=reddit&utm_medium=web2x&context=3][source]]
+#+end_quote
+
+This gets at the heart of the matter in the desire to grow users from having a good and accessible first experience and how that conflicts with making emacs something that continues to be valuable for them. What [[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] is best at, and in answering [[id:bedd2f19-ba7a-4680-a027-2080bd114707][Why pick emacs over vscode?]], is extensibility and the low-cost relatively of doing so.
+
+#+begin_quote
+The problem is to attract new users emacs should do something much better than other tools, and there is one thing emacs does much better: extensibility.
+
+But in order to master extensibility, new users have to face the alienness of emacs compared to other tools.
+
+Most users wants things like out of the box autocompletion and stuff, so they can use the new tool instantly before starting to learn its deeper layers.
+
+And emacs is not very good at this, new users have to start tinkering to set up autocompletion and stuff, while other tools, like vscode, download and setup things automatically and seamlessly.
+
+I was impressed by vscode when I tried it, seeing how polished the experience is. I still use emacs, of course, but vscode can be a model of how the new user experience should be. - [[https://www.reddit.com/r/emacs/comments/d4nilk/comment/f0f683j/?utm_source=reddit&utm_medium=web2x&context=3][source]]
+#+end_quote
