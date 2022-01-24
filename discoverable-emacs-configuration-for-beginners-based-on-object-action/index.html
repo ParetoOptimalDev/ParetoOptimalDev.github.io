@@ -1,9 +1,11 @@
-<!doctype html><html><title>Static type systems should be the default in computer programming - Pareto Optimal Dev</title>
+<!doctype html><html><title>Discoverable Emacs configuration for beginners based on Object->Action - Pareto Optimal Dev</title>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name=apple-mobile-web-app-capable content="yes">
-<meta name=description content>
+<meta name=description content="This idea hit me while reading Fifteen ways to use embark when I realized how much easier having access to embark-act could make things for beginners.
+This idea was furthered when reading the reddit thread about Discoverablity 2: Use context-menu-mode (since 28.1)&mldr;.
+Then other updates from Nicolas Rougier of Elegant Emacs that aims to clean up the emacs theme and UI had a couple posts that I thought of as being useful for this beginner configuration:">
 <link rel=stylesheet href=https://www.paretooptimal.dev/css/main.min.7f329dc288398e321d615d311bbce4d6702ad1df8156a76b70b7b3846175a07c.css>
 <script defer data-domain=paretooptimal.dev src=https://plausible.io/js/plausible.outbound-links.js></script>
 <body><header>
@@ -19,15 +21,40 @@
 <div class=grid>
 <div class=page data-level=1>
 <div class=content>
-<h1>Static type systems should be the default in computer programming</h1>
-</div>
-<div class=bl-section>
-<h4>Links to this note</h4>
-<div class=backlinks>
+<h1>Discoverable Emacs configuration for beginners based on Object->Action</h1>
+<p>This idea hit me while reading <a href=https://karthinks.com/software/fifteen-ways-to-use-embark/>Fifteen ways to use embark</a> when I realized how much easier having access to <code>embark-act</code> could make things for beginners.</p>
+<p>This idea was furthered when reading the reddit thread about <a href=https://www.reddit.com/r/emacs/comments/s6umyd/discoverablity%5F2%5Fuse%5Fcontextmenumode%5Fsince%5F281/>Discoverablity 2: Use context-menu-mode (since 28.1)&mldr;</a>.</p>
+<p>Then other updates from Nicolas Rougier of Elegant Emacs that aims to clean up the emacs theme and UI had a couple posts that I thought of as being useful for this beginner configuration:</p>
 <ul>
-<li><a href=../customizing-devos-after-install-for-my-use-cases/>Customizing devos after install for my use-cases</a></li>
+<li><a href=https://www.reddit.com/r/emacs/comments/rr2gtj/svgtagmode%5Fv%5F031%5Fis%5Fnow%5Fon%5Felpa/>svg-tag-mode (v 0.3.1) is now on ELPA</a></li>
+<li><a href=https://www.reddit.com/r/emacs/comments/rkgyqj/org%5Fnotebook%5Falternative%5Fdesign%5Fcode/>Org notebook (alternative design & code)</a></li>
+<li><a href=https://www.reddit.com/r/emacs/comments/q7963w/n%CE%BBno%5Fagenda%5Fis%5Fon%5Felpa/>NΛNO agenda is on ELPA</a></li>
+<li><a href=https://www.reddit.com/r/emacs/comments/q2204l/n%CE%BBno%5Ftheme%5Fis%5Fon%5Felpa/>NΛNO theme is on ELPA</a></li>
 </ul>
-</div>
+<p>All of these ideas together make me envision an <a href=../emacs/>emacs</a> configuration whose:</p>
+<ul>
+<li>UI is based on all of the great NΛNO stuff that should be friendly if not enticing to newcomers</li>
+<li>User is encouraged to use right click for context-specific help as much as possible</li>
+<li>User is encouraged to use <code>C-.</code> (embark-act) as much as possible</li>
+<li>Encouraged to use the help, but given an omni-search of <code>C-h f</code>, <code>C-h v</code></li>
+</ul>
+<p>Then the very active <a href=https://www.reddit.com/r/emacs/comments/s4za7y/emacs%5Fdiscoverability/>Emacs discoverability</a> reddit post about emacs configurations aimed at beginners turning off the toolbar which aids in discoverability. Is it context specific? Either way, a plan would be to keep it by default but give it a redesign in the spirit of the NΛNO theme (Note: Is Nicolas Rougier working on this or perhaps interested?).</p>
+<p>Then the typical additions, but stripped down to not have overwhelming information:</p>
+<ul>
+<li>which-key, perhaps bindings recommended ordered by &ldquo;most used in community&rdquo;</li>
+<li>strip down embark actions, categorize them, or otherwise add hierarchy to prevent overwhelm</li>
+</ul>
+<p>And other ideas:</p>
+<ul>
+<li>keyfreq configured by default, and some nice tutorial/wrapper to encourage them to improve their bindings/process</li>
+<li>alert.el for all notifications by default (Note: will this require users installing a notification library?)</li>
+<li>pdf-tools added by default along with maybe a wrapper mode that guides users to easily taking notes/annotating</li>
+<li>Encourage use of org-roam dailies to casually start developing their knowledge?</li>
+</ul>
+<p>Other important questions:</p>
+<ul>
+<li>How can you bridge the gap between beginner and motivating starting to more deeply understand/customize <a href=../emacs/>emacs</a> in a way that helps the user accomplish their goals (maybe <a href=../literature-emacs-from-catching-up-to-getting-ahead-r/emacs/>Literature: Emacs: from catching up to getting ahead - r/emacs</a> could help here?)</li>
+</ul>
 </div>
 </div>
 </div>
