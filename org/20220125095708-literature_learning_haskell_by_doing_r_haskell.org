@@ -1,0 +1,37 @@
+:PROPERTIES:
+:ID:       f42d9b54-4f6d-42ea-a8aa-98cec6f8f81d
+:END:
+#+title: Literature: Learning Haskell by doing - r/Haskell
+
+https://old.reddit.com/r/haskell/comments/sc41tj/learn_haskell_by_doing/
+
+* wow this one is high quality
+
+#+begin_quote
+https://lhbg-book.link/
+
+This one builds a static blog generator
+#+end_quote
+
+* good breakdown someone gave
+
+#+begin_quote
+    Write You a Scheme 2 (although it’s kinda difficult)
+    Make a Lisp (they have a Haskell version)
+    Learn Haskell by Building a Static Blog Generator
+    Simple Haskell Handbook (you make a CI platform)
+
+I recommend the last 2 ones! Then once you’re done with those, you can move on to the first two.
+
+You’ll notice that it’s mostly about compilers and parsing, since that is Haskell’s strength. But you could make web backends with it too, if web interests you more, and I recommend you look for Scotty (a backend library) tutorial.
+
+You can also take any simple project you know how to do in other languages like communicating with a simple API, then figure stuff out along the way with a lot of googling and asking questions. But I understand that this may seem intimidating.
+
+Another route you could take is look at Kowainik’s GitHub repositories and pick out a project that interests you, and try to Google the stuff you run into that you don’t understand. You could skip the concepts that overwhelm you (but just make a mental note of it, or write it down that you don’t understand it as of now). You could do this with any project really, but they’re a good start.
+
+I can’t provide links right now as I am on mobile. I’ll edit this comment when I’m able.
+#+end_quote
+
+
+* I need to create a [[id:b3e45a71-7110-464c-b2ac-5ea0eb1e6eb4][Learning Haskell by doing]] node
+

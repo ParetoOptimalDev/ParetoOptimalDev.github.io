@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       b3e45a71-7110-464c-b2ac-5ea0eb1e6eb4
+:END:
+#+title: Learning Haskell by doing
+
+Nothing here for now, but reading [[id:f42d9b54-4f6d-42ea-a8aa-98cec6f8f81d][Literature: Learning Haskell by doing - r/Haskell]] had some great resources that I recorded there.
+
+I'd like to more generally talk about this approach to learning [[id:25626fcc-e67b-4b44-be44-92d28f244bef][Haskell]] as well as [[id:fadc7b73-6017-4be3-8b07-ca8539c71e13][Approaches to learning Haskell]] generally.

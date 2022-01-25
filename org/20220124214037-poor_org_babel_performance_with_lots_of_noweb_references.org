@@ -5448,3 +5448,7 @@ so roughly it scales like:
 
 Though I'm not sure how much that can tell us... my guess is noweb-ref's don't use a dictionary with =O(1)= lookups?
 
+
+* https://lists.gnu.org/archive/html/emacs-orgmode/2022-01/msg00484.html
+
+

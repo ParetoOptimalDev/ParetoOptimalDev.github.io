@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       fadc7b73-6017-4be3-8b07-ca8539c71e13
+:END:
+#+title: Approaches to learning Haskell
+
+
+* [[id:b3e45a71-7110-464c-b2ac-5ea0eb1e6eb4][Learning Haskell by doing]]
+
+* Some other potential categorys but perhaps not using what I think is the best or [[id:a1a0dddd-1257-4d3a-9912-468c3732d93a][canonical term]]
+
+- Learn Haskell by analogy
+- Learn Haskell by analogy to X language (good for people wanting to try out thinking in Haskell with experience in another language)
+- Learn Haskell from first principles (I should [[id:4081b9e8-b434-4f52-bfcd-ea1119334be7][consider promoting this product]])

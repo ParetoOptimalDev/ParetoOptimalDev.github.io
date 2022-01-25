@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       a1a0dddd-1257-4d3a-9912-468c3732d93a
+:END:
+#+title: canonical term
+
+
+The best term for something basically.
+
+I'll use this page as a "tag page" like:
+
+#+begin_quote
+I like the sausage burritos with mustard that are popular in America (not sure sausage burrito is the canonical term here)
+#+end_quote
+
+Then I'll occasionally look at backlinks here and say I saw the above and realized what the canonical term was:
+
+#+begin_src diff
+I like the hot dogs with mustard that are popular in America)
+#+end_src
+
+
