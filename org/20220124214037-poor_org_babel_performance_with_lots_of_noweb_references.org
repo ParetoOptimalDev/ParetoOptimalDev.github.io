@@ -5370,7 +5370,7 @@ stat -c "%n %s" 20.org 40.org 80.org 160.org 320.org 640.org
 | 320.org | 24770 |
 | 640.org | 49470 |
 
-** vanilla
+** emacs -Q (gcc emacs 28.0.91)
 
 *** =gc-cons-threshold= most-positive-fixnum
 
@@ -5395,6 +5395,20 @@ so roughly it scales like:
 #+end_example
 
 Though I'm not sure how much that can tell us... my guess is noweb-ref's don't use a dictionary with =O(1)= lookups?
+
+** emacs -Q (emacs 27.2/org-9.4.4)
+*** =gc-cons-threshold= most-positive-fixnum
+
+| N blocks | runtime | # of GCs |
+|----------+---------+----------|
+|       10 |   0.031 |        0 |
+|       20 |   0.054 |        0 |
+|       40 |   0.142 |        0 |
+|       80 |   0.445 |        0 |
+|      160 |   1.641 |        0 |
+|      320 |   6.478 |        0 |
+|      640 |  25.729 |        0 |
+
 
 ** my config
 
