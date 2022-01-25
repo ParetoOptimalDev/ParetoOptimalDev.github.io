@@ -1,0 +1,5409 @@
+:PROPERTIES:
+:ID:       822b7e02-49a2-46b3-a4f4-ab5bdd322760
+:END:
+#+title: poor org-babel performance with lots of noweb-references
+#+PROPERTY: header-args :exports both
+
+* benchmark macro
+
+#+begin_src emacs-lisp
+(cl-defmacro bench (&optional (times 100000) &rest body)
+  "Call `benchmark-run-compiled' on BODY with TIMES iterations, returning list suitable for Org source block evaluation.
+Garbage is collected before calling `benchmark-run-compiled' to
+avoid counting existing garbage which needs collection."
+  (declare (indent defun))
+  `(progn
+     (garbage-collect)
+     (list '("Total runtime" "# of GCs" "Total GC runtime")
+           'hline
+           (benchmark-run-compiled ,times
+             (progn
+               ,@body)))))
+#+end_src
+
+#+RESULTS:
+: bench
+
+
+* The example format: elisp noweb block and =N= noweb-refs
+** 10
+
+#+begin_src org :tangle 10.org
+  ,#+begin_src elisp :noweb yes :tangle 10.el
+  <<some-reference>>
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+#+end_src
+
+#+begin_src emacs-lisp
+(bench (org-babel-tangle-file "10.org"))
+#+end_src
+
+#+RESULTS:
+| Total runtime | # of GCs | Total GC runtime |
+|---------------+----------+------------------|
+|   0.124624265 |        0 |              0.0 |
+
+** 20
+
+#+begin_src org :tangle 20.org
+  ,#+begin_src elisp :noweb yes :tangle 20.el
+  <<some-reference>>
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+  
+#+end_src
+
+#+begin_src emacs-lisp
+(bench (org-babel-tangle-file "20.org"))
+#+end_src
+
+#+RESULTS:
+|       Total runtime | # of GCs | Total GC runtime |
+|---------------------+----------+------------------|
+| 0.19674507600000002 |        0 |              0.0 |
+
+** 40
+
+#+begin_src org :tangle 40.org
+  ,#+begin_src elisp :noweb yes :tangle 40.el
+  <<some-reference>>
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+#+end_src
+
+#+begin_src emacs-lisp
+(bench (org-babel-tangle-file "40.org"))
+#+end_src
+
+#+RESULTS:
+|      Total runtime | # of GCs |    Total GC runtime |
+|--------------------+----------+---------------------|
+| 0.6341031629999999 |        2 | 0.16354602799999896 |
+
+
+** 80
+
+#+begin_src org :tangle 80.org
+  ,#+begin_src elisp :noweb yes :tangle 80.el
+  <<some-reference>>
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+#+end_src
+
+#+begin_src emacs-lisp
+(bench (org-babel-tangle-file "80.org"))
+#+end_src
+
+#+RESULTS:
+| Total runtime | # of GCs | Total GC runtime |
+|---------------+----------+------------------|
+|   0.129408055 |        0 |              0.0 |
+
+
+
+** 160
+
+#+begin_src org :tangle 160.org
+  ,#+begin_src elisp :noweb yes :tangle 80.el
+  <<some-reference>>
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+#+end_src
+
+#+begin_src emacs-lisp
+(bench (org-babel-tangle-file "160.org"))
+#+end_src
+
+#+RESULTS:
+| Total runtime | # of GCs | Total GC runtime |
+|---------------+----------+------------------|
+|   4.362402275 |       30 |      2.277757113 |
+
+** 320
+
+#+begin_src org :tangle 320.org
+  ,#+begin_src elisp :noweb yes :tangle 80.el
+  <<some-reference>>
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+#+end_src
+
+#+begin_src emacs-lisp
+(bench (org-babel-tangle-file "320.org"))
+#+end_src
+
+#+RESULTS:
+| Total runtime | # of GCs |  Total GC runtime |
+|---------------+----------+-------------------|
+|  16.327829716 |      117 | 9.140450260000001 |
+
+** 640
+
+#+begin_src org :tangle 640.org
+  ,#+begin_src elisp :noweb yes :tangle 80.el
+  <<some-reference>>
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+    ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+  ,#+begin_src elisp :noweb-ref some-reference :tangle no
+  ;; comment
+  ,#+end_src
+
+#+end_src
+
+#+begin_src emacs-lisp
+(bench (org-babel-tangle-file "640.org"))
+#+end_src
+
+** try each but with =gc-cons-threshold= most-positive-fixnum
+
+#+begin_src emacs-lisp
+  (let ((gc-cons-threshold most-positive-fixnum))
+    (bench (org-babel-tangle-file "10.org"))
+  )
+#+end_src
+
+#+RESULTS:
+| Total runtime | # of GCs | Total GC runtime |
+|---------------+----------+------------------|
+|   0.111402512 |        0 |              0.0 |
+
+
+#+begin_src emacs-lisp
+  (let ((gc-cons-threshold most-positive-fixnum))
+    (bench (org-babel-tangle-file "20.org"))
+  )
+#+end_src
+
+#+RESULTS:
+|       Total runtime | # of GCs | Total GC runtime |
+|---------------------+----------+------------------|
+| 0.19835355699999999 |        0 |              0.0 |
+
+#+begin_src emacs-lisp
+  (let ((gc-cons-threshold most-positive-fixnum))
+    (bench (org-babel-tangle-file "40.org"))
+  )
+#+end_src
+
+#+RESULTS:
+| Total runtime | # of GCs | Total GC runtime |
+|---------------+----------+------------------|
+|   0.469034692 |        0 |              0.0 |
+
+
+#+begin_src emacs-lisp
+  (let ((gc-cons-threshold most-positive-fixnum))
+    (bench (org-babel-tangle-file "80.org"))
+  )
+#+end_src
+
+#+RESULTS:
+| Total runtime | # of GCs | Total GC runtime |
+|---------------+----------+------------------|
+|   0.860127381 |        0 |              0.0 |
+
+#+begin_src emacs-lisp
+  (let ((gc-cons-threshold most-positive-fixnum))
+    (bench (org-babel-tangle-file "160.org"))
+  )
+#+end_src
+
+#+RESULTS:
+| Total runtime | # of GCs | Total GC runtime |
+|---------------+----------+------------------|
+|    2.19806911 |        0 |              0.0 |
+
+#+begin_src emacs-lisp
+  (let ((gc-cons-threshold most-positive-fixnum))
+    (bench (org-babel-tangle-file "320.org"))
+  )
+#+end_src
+
+#+RESULTS:
+|      Total runtime | # of GCs | Total GC runtime |
+|--------------------+----------+------------------|
+| 7.6519706030000005 |        0 |              0.0 |
+
+#+begin_src emacs-lisp
+  (let ((gc-cons-threshold most-positive-fixnum))
+    (bench (org-babel-tangle-file "640.org"))
+  )
+#+end_src
+
+#+RESULTS:
+| Total runtime | # of GCs | Total GC runtime |
+|---------------+----------+------------------|
+|  30.635133942 |        0 |              0.0 |
+
+
+* results
+
+** my versions and system information
+
+#+name: cZ5uZjEodK9akLJQipK9sW
+#+begin_src sh
+realpath $(which emacs)
+#+end_src
+
+#+RESULTS: cZ5uZjEodK9akLJQipK9sW
+: /nix/store/9azk6bini61si4ha0lv4vbpn6r6s2irq-emacs-gcc-with-packages-28.0.91/bin/emacs
+
+#+name: meaJe69ERTdmn7URhGoZHz
+#+begin_src emacs-lisp
+(native-comp-available-p)
+#+end_src
+
+#+RESULTS: meaJe69ERTdmn7URhGoZHz
+: t
+
+#+begin_src emacs-lisp
+  (format "%s \n Org: %s" (emacs-version) (org-version))
+#+end_src
+
+#+RESULTS:
+: GNU Emacs 28.0.91 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.30, cairo version 1.16.0) 
+:  Org: 9.5.2
+
+
+#+begin_src sh :results verbatim
+nix-shell -p inxi --run "inxi -c 0 -CS"
+#+end_src
+
+#+RESULTS:
+: System:    Kernel: 5.10.91 x86_64 bits: 64 Desktop: i3 4.20 Distro: NixOS 21.11 (Porcupine) 
+: CPU:       Info: 6-Core model: Intel Core i7-8750H bits: 64 type: MT MCP cache: L2: 9 MiB 
+:            Speed: 900 MHz min/max: 800/4100 MHz Core speeds (MHz): 1: 900 2: 900 3: 900 4: 887 
+:            5: 900 6: 900 7: 900 8: 900 9: 900 10: 900 11: 900 12: 901 
+
+
+
+
+
+
+** sanity check on those filesizes
+
+#+begin_src sh
+stat -c "%n %s" 20.org 40.org 80.org 160.org 320.org 640.org
+#+end_src
+
+#+RESULTS:
+| 20.org  |  1614 |
+| 40.org  |  3158 |
+| 80.org  |  6246 |
+| 160.org | 12420 |
+| 320.org | 24770 |
+| 640.org | 49470 |
+
+
+** =gc-cons-threshold= 800000
+
+| N blocks | runtime | # of GCs |
+|----------+---------+----------|
+|       10 |   0.165 |        0 |
+|       20 |   0.143 |        0 |
+|       40 |   0.522 |        2 |
+|       80 |   0.129 |        0 |
+|      160 |    4.36 |       30 |
+|      320 |  16.327 |      117 |
+
+
+** =gc-cons-threshold= most-positive-fixnum
+
+| N blocks | runtime | # of GCs |
+|----------+---------+----------|
+|       10 |   0.111 |        0 |
+|       20 |   0.198 |        0 |
+|       40 |   0.469 |        0 |
+|       80 |   0.860 |        0 |
+|      160 |   2.192 |        0 |
+|      320 |    7.65 |        0 |
+|      640 |  30.635 |        0 |
+
+so roughly it scales like:
+
+#+begin_example
+0.8x (10-20)
+2.5x  (20-40)
+2x  (40-80)
+3x  (160-320)
+4x  (320-640)
+#+end_example
+
+Though I'm not sure how much that can tell us... my guess is noweb-ref's don't use a dictionary with =O(1)= lookups?
+

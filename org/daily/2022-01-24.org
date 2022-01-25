@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       0139a3bf-49a0-4114-95df-810f25de23e5
+:END:
+#+title: 2022-01-24
+
+* I was [[https://old.reddit.com/r/orgmode/comments/sbijgd/orgclockin_is_quite_slow/hu3bxew/?context=3][asked]] to submit a bug report on [[id:822b7e02-49a2-46b3-a4f4-ab5bdd322760][poor org-babel performance with lots of noweb-references]]

@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       e7f6054c-2e76-4e64-8c6e-d0526e71faf9
+:END:
+#+title: 2022-01-23
+
+* [[id:8c43f1ce-24c8-4a67-8077-786b17ca2ff5][installing NixOS using devos and nix flakes]]
