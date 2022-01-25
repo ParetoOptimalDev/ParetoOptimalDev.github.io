@@ -5370,8 +5370,35 @@ stat -c "%n %s" 20.org 40.org 80.org 160.org 320.org 640.org
 | 320.org | 24770 |
 | 640.org | 49470 |
 
+** vanilla
 
-** =gc-cons-threshold= 800000
+*** =gc-cons-threshold= most-positive-fixnum
+
+| N blocks | runtime | # of GCs |
+|----------+---------+----------|
+|       10 |   0.027 |        0 |
+|       20 |   0.049 |        0 |
+|       40 |   0.121 |        0 |
+|       80 |   0.391 |        0 |
+|      160 |   1.426 |        0 |
+|      320 |   6.765 |        0 |
+|      640 |  23.972 |        0 |
+
+so roughly it scales like:
+
+#+begin_example
+0.8x (10-20)
+2.5x  (20-40)
+3x  (40-80)
+3.5x  (160-320)
+4x  (320-640)
+#+end_example
+
+Though I'm not sure how much that can tell us... my guess is noweb-ref's don't use a dictionary with =O(1)= lookups?
+
+** my config
+
+*** =gc-cons-threshold= 800000
 
 | N blocks | runtime | # of GCs |
 |----------+---------+----------|
@@ -5383,7 +5410,7 @@ stat -c "%n %s" 20.org 40.org 80.org 160.org 320.org 640.org
 |      320 |  16.327 |      117 |
 
 
-** =gc-cons-threshold= most-positive-fixnum
+*** =gc-cons-threshold= most-positive-fixnum
 
 | N blocks | runtime | # of GCs |
 |----------+---------+----------|
