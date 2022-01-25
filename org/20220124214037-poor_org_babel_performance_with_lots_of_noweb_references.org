@@ -2,7 +2,7 @@
 :ID:       822b7e02-49a2-46b3-a4f4-ab5bdd322760
 :END:
 #+title: poor org-babel performance with lots of noweb-references
-#+PROPERTY: header-args :exports both
+#+PROPERTY: header-args :exports both :eval no
 
 * benchmark macro
 
@@ -28,7 +28,7 @@ avoid counting existing garbage which needs collection."
 * The example format: elisp noweb block and =N= noweb-refs
 ** 10
 
-#+begin_src org :tangle 10.org
+#+begin_src org
   ,#+begin_src elisp :noweb yes :tangle 10.el
   <<some-reference>>
   ,#+end_src
@@ -86,7 +86,7 @@ avoid counting existing garbage which needs collection."
 
 ** 20
 
-#+begin_src org :tangle 20.org
+#+begin_src org
   ,#+begin_src elisp :noweb yes :tangle 20.el
   <<some-reference>>
   ,#+end_src
@@ -184,7 +184,7 @@ avoid counting existing garbage which needs collection."
 
 ** 40
 
-#+begin_src org :tangle 40.org
+#+begin_src org
   ,#+begin_src elisp :noweb yes :tangle 40.el
   <<some-reference>>
   ,#+end_src
@@ -363,7 +363,7 @@ avoid counting existing garbage which needs collection."
 
 ** 80
 
-#+begin_src org :tangle 80.org
+#+begin_src org
   ,#+begin_src elisp :noweb yes :tangle 80.el
   <<some-reference>>
   ,#+end_src
@@ -703,7 +703,7 @@ avoid counting existing garbage which needs collection."
 
 ** 160
 
-#+begin_src org :tangle 160.org
+#+begin_src org
   ,#+begin_src elisp :noweb yes :tangle 80.el
   <<some-reference>>
   ,#+end_src
@@ -1361,7 +1361,7 @@ avoid counting existing garbage which needs collection."
 
 ** 320
 
-#+begin_src org :tangle 320.org
+#+begin_src org
   ,#+begin_src elisp :noweb yes :tangle 80.el
   <<some-reference>>
   ,#+end_src
@@ -2659,7 +2659,7 @@ avoid counting existing garbage which needs collection."
 
 ** 640
 
-#+begin_src org :tangle 640.org
+#+begin_src org
   ,#+begin_src elisp :noweb yes :tangle 80.el
   <<some-reference>>
   ,#+end_src
