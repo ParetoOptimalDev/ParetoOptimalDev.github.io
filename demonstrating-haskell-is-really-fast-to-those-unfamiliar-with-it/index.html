@@ -1,9 +1,13 @@
-<!doctype html><html><title>Haskell - Pareto Optimal Dev</title>
+<!doctype html><html><title>Demonstrating Haskell is really fast to those unfamiliar with it - Pareto Optimal Dev</title>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name=apple-mobile-web-app-capable content="yes">
-<meta name=description content>
+<meta name=description content="Motivation I&rsquo;ve had this idea before, but actually creating this page was inspired by a tweet:
+ Does anybody have in mind a good way how to show people not familiar with Haskell that it&rsquo;s really fast?
+Probably something other than this https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/haskell.html
+Maybe anyone has real experience of migrating the project from JVM to Haskell or something similar?
+ This also brings to mind How to make Haskell the programming industry default (that&rsquo;s a tall order!">
 <link rel=stylesheet href=https://www.paretooptimal.dev/css/main.min.7f329dc288398e321d615d311bbce4d6702ad1df8156a76b70b7b3846175a07c.css>
 <script defer data-domain=paretooptimal.dev src=https://plausible.io/js/plausible.outbound-links.js></script>
 <body><header>
@@ -19,20 +23,23 @@
 <div class=grid>
 <div class=page data-level=1>
 <div class=content>
-<h1>Haskell</h1>
-</div>
-<div class=bl-section>
-<h4>Links to this note</h4>
-<div class=backlinks>
-<ul>
-<li><a href=../simple-haskell-can-result-in-simple-code-but-complex-codebases/>"Simple Haskell" can result in simple code but complex codebases</a></li>
-<li><a href=../choosing-fancy-haskell-can-be-for-pragmatic-reasons/>Choosing "Fancy Haskell" can be for pragmatic reasons</a></li>
-<li><a href=../examples-of-considering-pareto-optimality-in-software-development/>examples of considering pareto optimality in software development</a></li>
-<li><a href=../learning-haskell-by-doing/>Learning Haskell by doing</a></li>
-<li><a href=../package-management-and-configuration-in-emacs/>Package management and configuration in emacs</a></li>
-<li><a href=../prefer-macro-level-simplicity-even-if-it-means-micro-level-complexity/>Prefer macro-level simplicity even if it means micro-level complexity</a></li>
-</ul>
-</div>
+<h1>Demonstrating Haskell is really fast to those unfamiliar with it</h1>
+<h2 id=motivation>Motivation</h2>
+<p>I&rsquo;ve had this idea before, but actually creating this page was inspired by a tweet:</p>
+<blockquote>
+<p>Does anybody have in mind a good way how to show people not familiar with Haskell that it&rsquo;s really fast?</p>
+<p>Probably something other than this <a href=https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/haskell.html>https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/haskell.html</a></p>
+<p>Maybe anyone has real experience of migrating the project from JVM to Haskell or something similar?</p>
+</blockquote>
+<p>This also brings to mind <a href=../how-to-make-haskell-the-programming-industry-default/>How to make Haskell the programming industry default</a> (that&rsquo;s a tall order!)</p>
+<h2 id=easy-parallel-downloading>easy parallel downloading</h2>
+<p>One common task across programming languages is downloading things in parallel and Haskell makes this very easy to do fast.</p>
+<p>Untype checked Haskell warning:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>import</span> Network.HTTP
+<span style=color:#a6e22e>siteResponses</span> <span style=color:#f92672>&lt;-</span> simpleHTTP (getRequest <span style=color:#e6db74>&#34;http://www.haskell.org/&#34;</span>) <span style=color:#f92672>&lt;*&gt;</span> simpleHTTP (getRequest <span style=color:#e6db74>&#34;http://www.twitter.com/&#34;</span>) <span style=color:#f92672>&lt;*&gt;</span> simpleHTTP (getRequest <span style=color:#e6db74>&#34;http://www.twitter.com/&#34;</span>)
+<span style=color:#66d9ef>let</span> getFirst100BytesFromResponse rsp <span style=color:#f92672>=</span> fmap (take <span style=color:#ae81ff>100</span>) (getResponseBody rsp)
+<span style=color:#a6e22e>fmap</span> getFirst100BytesFromResponse siteResponses
+</code></pre></div>
 </div>
 </div>
 </div>
