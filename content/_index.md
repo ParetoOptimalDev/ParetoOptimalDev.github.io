@@ -6,7 +6,7 @@ draft = false
 
 # How to use this exobrain
 
-- Don't expect blog post quality or polish, the idea is to represent thoughts and ideas to grow them over time (expect [quality labeling](./Categorizing-state-quality-of-notes-with-tags-and-the-real-life-tree-lifecycle) in the future though)
+- Don't expect blog post quality or polish, the idea is to represent thoughts and ideas to grow them over time (expect [quality labeling](./categorizing-state/quality/-maturity-of-notes-with-tags-and-the-real-life-tree-lifecycle/) in the future though)
 - How to find content
   - Pick one of [listed topics](#topics-at-the-front-of-my-mind) and go exploring!
   - Browse through the full list of posts
