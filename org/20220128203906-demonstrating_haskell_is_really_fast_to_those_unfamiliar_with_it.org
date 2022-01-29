@@ -31,5 +31,11 @@ fmap getFirst100BytesFromResponse siteResponses
 #+end_src
 
 
+* TODO streamly
 
+* TODO haxly
+
+* TODO vector
+
+* TODO brainstorm laziness examples?
 
