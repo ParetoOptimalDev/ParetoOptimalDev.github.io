@@ -8,3 +8,5 @@ Evergreen notes are written and organized to evolve, contribute, and accumulate 
 #+end_quote
 
 https://notes.andymatuschak.org/Evergreen_notes
+
+Something useful would be showing [[id:26f9c7e9-383f-457d-8ed8-1fb24315b460][maturity of notes with tags and the real life tree lifecycle]] to stick with the evergreen theme.
