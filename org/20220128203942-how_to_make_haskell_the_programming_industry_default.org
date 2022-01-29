@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       6b9eafcb-6697-49f2-bc46-2295c3b76409
+:END:
+#+title: How to make Haskell the programming industry default 
+
+* Well, this is a huge topic
+
+** Let's start "small"... 
+
+*** [[id:9845ecf6-2747-441e-9807-219f5607d308][Proving Haskell is the best general programming language as a default]]

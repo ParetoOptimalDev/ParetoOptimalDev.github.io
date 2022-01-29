@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       02cb11d5-03d6-457c-97ec-e43dc2a56f09
+:END:
+#+title: Demonstrating Haskell is really fast to those unfamiliar with it
+
+* Motivation
+
+I've had this idea before, but actually creating this page was inspired by a tweet:
+
+#+begin_quote
+Does anybody have in mind a good way how to show people not familiar with Haskell that it's really fast?
+
+Probably something other than this https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/haskell.html
+
+Maybe anyone has real experience of migrating the project from JVM to Haskell or something similar?
+#+end_quote
+
+This also brings to mind [[id:6b9eafcb-6697-49f2-bc46-2295c3b76409][How to make Haskell the programming industry default]] (that's a tall order!)
+ 
+* easy parallel downloading
+
+One common task across programming languages is downloading things in parallel and Haskell makes this very easy to do fast.
+
+Untype checked Haskell warning:
+
+#+begin_src haskell
+import Network.HTTP
+siteResponses <- simpleHTTP (getRequest "http://www.haskell.org/") <*> simpleHTTP (getRequest "http://www.twitter.com/") <*> simpleHTTP (getRequest "http://www.twitter.com/")
+let getFirst100BytesFromResponse rsp = fmap (take 100) (getResponseBody rsp)
+fmap getFirst100BytesFromResponse siteResponses
+#+end_src
+
+
+
+

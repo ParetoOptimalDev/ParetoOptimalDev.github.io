@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       9845ecf6-2747-441e-9807-219f5607d308
+:END:
+#+title: Proving Haskell is the best general programming language as a default
+
+
+This one will be tough, because the common retort will be best for what.
+
+For now I'll respond by asking if you had a language in mind when I mentioned "most generally applicable programming language".
+
+I bet it with something along the lines of:
+
+- Java
+- C#
+- Python
+- Rust
+
+So there is a shared definition amongst us there somewhere, but some work will have to be done to flesh that out.
