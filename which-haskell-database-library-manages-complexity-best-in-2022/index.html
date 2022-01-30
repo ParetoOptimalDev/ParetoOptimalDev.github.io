@@ -108,7 +108,7 @@
 	limit <span style=color:#ae81ff>1</span>
 	pure orders
 <span style=color:#66d9ef>:</span>}
-</code></pre></div><h3 id=now-let-s-write-typical-complexity-get-most-expensive-product-bought-in-a-given-order--org172d527--with-esqueleto>Now let&rsquo;s write <a href=#typical-complexity-get-most-expensive-product-bought-in-a-given-order>Typical complexity: Get most expensive product bought in a given order</a> with Esqueleto</h3>
+</code></pre></div><h3 id=now-let-s-write-typical-complexity-get-most-expensive-product-bought-in-a-given-order--org274269e--with-esqueleto>Now let&rsquo;s write <a href=#typical-complexity-get-most-expensive-product-bought-in-a-given-order>Typical complexity: Get most expensive product bought in a given order</a> with Esqueleto</h3>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>:</span>t <span style=color:#66d9ef>OrderDetail</span>
 </code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>:</span>{
 <span style=color:#a6e22e>runDB</span> <span style=color:#f92672>$</span> select <span style=color:#f92672>$</span> <span style=color:#66d9ef>do</span>
@@ -188,7 +188,7 @@
                      $ do order &lt;- each orderSchema
                           orderDetail &lt;- each orderDetailsSchema
                           ....
-</code></pre></div><h3 id=now-let-s-write-typical-complexity-get-most-expensive-product-bought-in-a-given-order--org172d527--with-rel8>Now let&rsquo;s write <a href=#typical-complexity-get-most-expensive-product-bought-in-a-given-order>Typical complexity: Get most expensive product bought in a given order</a> with rel8</h3>
+</code></pre></div><h3 id=now-let-s-write-typical-complexity-get-most-expensive-product-bought-in-a-given-order--org274269e--with-rel8>Now let&rsquo;s write <a href=#typical-complexity-get-most-expensive-product-bought-in-a-given-order>Typical complexity: Get most expensive product bought in a given order</a> with rel8</h3>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>:</span>{
 (flip run conn) <span style=color:#f92672>$</span> <span style=color:#66d9ef>do</span>
   transaction <span style=color:#66d9ef>ReadCommitted</span> <span style=color:#66d9ef>Write</span> <span style=color:#f92672>$</span> <span style=color:#66d9ef>do</span>
@@ -199,6 +199,13 @@
 </code></pre></div><h2 id=squeal--not-on-nixos>squeal (not on nixos)</h2>
 <p>Ok&mldr; I love that this is a deep embedding but it&rsquo;s wayyy uglier than SQL and so damn noisy :/</p>
 <h2 id=re-review-https-www-dot-williamyaoh-dot-com-posts-2019-12-14-typesafe-db-libraries-dot-html>re-review <a href=https://www.williamyaoh.com/posts/2019-12-14-typesafe-db-libraries.html>https://www.williamyaoh.com/posts/2019-12-14-typesafe-db-libraries.html</a></h2>
+</div>
+<div class=bl-section>
+<h4>Comments</h4>
+<div class=backlinks>
+<script defer src=https://cdn.commento.io/js/commento.js></script>
+<div id=commento></div>
+</div>
 </div>
 </div>
 </div>
