@@ -108,6 +108,12 @@ Our working memory can only handle 7 things at a time, so perhaps keeping your u
 
 Another example is =Narrowing framework= with consult active and ivy and helm tagged =noexport=.
 
+* discussion points
+
+** literate configs can be harder to debug
+
+   [[id:423b5b1c-1c25-4b93-8a97-a37c4abb6d2e][Improving debugging of literate emacs configutations]]
+
 * TODO Per use-case literate style with =:config= examples
 
 The more complex version of [[*Per use-case literate style][Per use-case literate style]] where:

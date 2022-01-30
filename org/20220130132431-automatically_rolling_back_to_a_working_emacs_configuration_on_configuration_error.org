@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       750cea12-ecc1-4f0c-b96c-481275712ca1
+:END:
+#+title: Automatically rolling back to a working emacs configuration on configuration error
+
+That idea starts with automating change commits with git, stashes your broken config and goes back to a known working config, then pops the stash so you can debug the broken config from your usual emacs environment.

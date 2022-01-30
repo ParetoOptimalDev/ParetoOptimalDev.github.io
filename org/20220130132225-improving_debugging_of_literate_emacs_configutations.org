@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       423b5b1c-1c25-4b93-8a97-a37c4abb6d2e
+:END:
+#+title: Improving debugging of literate emacs configutations
+
+Two things are required:
+
+- [[id:750cea12-ecc1-4f0c-b96c-481275712ca1][Automatically rolling back to a working emacs configuration on configuration error]]
+- [[id:0234e238-1f58-4646-8b14-0538edf1024f][Syncing changes from an org-babel tangled file back to the literate file]]
+
+Then you effectively eliminate most of the extra friction of literate configurations by having both literate/unliterate as an option without the extra copying work.

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       0234e238-1f58-4646-8b14-0538edf1024f
+:END:
+#+title: Syncing changes from an org-babel tangled file back to the literate file
+
+IIRC this is called detangling and there is built-in support for it?
+
+I also know of org-tanglesync which looks very promising.
