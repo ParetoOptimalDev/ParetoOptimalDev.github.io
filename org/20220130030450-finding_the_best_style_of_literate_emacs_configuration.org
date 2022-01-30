@@ -128,3 +128,7 @@ I think Prot roughly goes by use case? Maybe fully, can't remember.
 ** TODO http://akkartik.name/post/literate-programming
 
    this article criticizes the style of literate programming i try to convince isn't as good as well.
+
+** TODO [[https://news.ycombinator.com/item?id=29860951][HN discussion on "Knuth is doing it wrong"]]
+
+   Huh, how can people say this is nothing new when most that use literate programming don't use this style?
