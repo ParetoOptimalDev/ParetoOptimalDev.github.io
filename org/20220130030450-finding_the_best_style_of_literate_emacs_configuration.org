@@ -64,7 +64,7 @@ A solution is to organize by use case and use =noweb-ref= in case ordering matte
   ,#+begin_src elisp
    (use-package haskell-mode)
   ,#+end_src
-  ,***  [[file:20220130030450-finding_the_best_style_of_literate_emacs_configuration.org::*Language Server Protocol for development in many languages][lsp-mode]] integration
+  ,***  [[*Language Server Protocol][lsp-mode]] integration
   ,#+begin_src elisp
    (use-package lsp-haskell)
   ,#+end_src
@@ -86,7 +86,7 @@ A solution is to organize by use case and use =noweb-ref= in case ordering matte
   ,#+begin_src elisp
    (use-package python-mode)
   ,#+end_src
-  ,*** [[file:20220130030450-finding_the_best_style_of_literate_emacs_configuration.org::*Language Server Protocol for development in many languages][lsp-mode]] integration
+  ,*** [[*Language Server Protocol][lsp-mode]] integration
   ,#+begin_src elisp
    (use-package lsp-python)
   ,#+end_src
