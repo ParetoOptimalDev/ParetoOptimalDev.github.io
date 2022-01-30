@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       f715a43c-29e6-4633-b15f-5e36cfc5776f
+:END:
+#+title: Finding the best style of literate emacs configuration
+
+* The typical per-package use-package literate style
+
+Typically use-package is the first and only way of organizing emacs configurations most emacsers are exposed to.
+
+It's natural that most kiterate configs would faithfully represent that organizational structure, but with the added benefit if collaosi ke nodes and perhaps notes on the entire use package block.
+
+  #+begin_src org
+    ,* use-package
+    ,** magit
+       ,#+begin_src elisp
+       (use-package magit)
+       ,#+end_src
+    ,** haskell-mode
+       ,#+begin_src elisp
+       (use-package magit)
+       ,#+end_src
+    ,** org-roam
+       ,#+begin_src elisp
+       (use-package magit)
+       ,#+end_src
+  #+end_src
+
+* Per use-case literate style
+
+Once your configuration starts getting really large, the use-package style can start losing meaning and feel very overwhelming.
+
+A solution is to organize by use case and use =noweb-ref= in case ordering matters to tangle the blocks organized by use case into use package blocks. Here's a
