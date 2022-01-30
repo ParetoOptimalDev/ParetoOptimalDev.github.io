@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       423b5b1c-1c25-4b93-8a97-a37c4abb6d2e
 :END:
-#+title: Improving debugging of literate emacs configutations
+#+title: Improving debugging of literate emacs configurations
 
 Two things are required:
 
