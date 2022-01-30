@@ -9,7 +9,11 @@ I can't decide on the best style and I'd like to before I start writing [[id:ac8
 
 Typically use-package is the first and only way of organizing emacs configurations most emacsers are exposed to.
 
-It's natural that most kiterate configs would faithfully represent that organizational structure, but with the added benefit if collaosi ke nodes and perhaps notes on the entire use package block.
+It's natural that most literate configs would faithfully represent that organizational structure, but with the added benefit if collapsible nodes and perhaps notes on the entire use package block.
+
+To my great surprise, this style is pretty close to Knuth's own style of literate programming. Maybe [[http://akkartik.name/post/literate-programming][Knuth is doing it wrong]] was on to something?
+
+Here's our first example:
 
 #+begin_src org
   ,* use-package
@@ -46,7 +50,7 @@ It's natural that most kiterate configs would faithfully represent that organiza
 
 * Per use-case literate style
 
-Once your configuration starts getting really large, the use-package style can start losing meaning and feel very overwhelming.
+Once your configuration starts getting really large, the use-package style alone can start losing meaning and feel very overwhelming.
 
 A solution is to organize by use case and use =noweb-ref= in case ordering matters to tangle the blocks organized by use case into use package blocks. Here's an example:
 
