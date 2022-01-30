@@ -5,7 +5,7 @@
 
 WIP, this is just an outline so far
 
-* TODO Finding the best style of literate emacs configuration
+* TODO [[id:f715a43c-29e6-4633-b15f-5e36cfc5776f][Finding the best style of literate emacs configuration]]
 
 * TODO Bootstrapping init.el to use an org file for what it believes is your "[[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] configuration"
 
