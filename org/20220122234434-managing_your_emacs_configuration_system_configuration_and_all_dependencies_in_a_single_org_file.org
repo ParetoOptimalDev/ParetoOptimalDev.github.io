@@ -5,6 +5,8 @@
 
 WIP, this is just an outline so far
 
+* TODO Finding the best style of literate emacs configuration
+
 * TODO Bootstrapping init.el to use an org file for what it believes is your "[[id:5861e294-d990-4163-b470-8af821ff986b][emacs]] configuration"
 
 * TODO user level configuration using [[id:07852eb7-3728-42b5-b72c-58c92757fc80][home-manager]]
