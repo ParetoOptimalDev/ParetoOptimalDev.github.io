@@ -101,3 +101,17 @@ Our working memory can only handle 7 things at a time, so perhaps keeping your u
 ** As seen with eglot and =:noexport= separating by use-case lets you easily tryout different packages for given use-cases.
 
 Another example is =Narrowing framework= with consult active and ivy and helm tagged =noexport=.
+
+* TODO Per use-case literate style with =:config= examples
+
+The more complex version of [[*Per use-case literate style][Per use-case literate style]] where:
+
+- ordering becomes important and you need to tangle to =use-package= blocks
+- You have =:init=, =:config=, =:bind=, =:custom= for certain configs and need to be able to tangle to them from any given use-case
+
+* TODO are there other styles?
+
+What about Alhassy, Prot, and Tecosaurs configs I have listed in [[id:37518482-c1b0-4c63-8fb7-7e81d2698774][Literate emacs configuration examples]]?
+
+I think Prot roughly goes by use case? Maybe fully, can't remember.
+
