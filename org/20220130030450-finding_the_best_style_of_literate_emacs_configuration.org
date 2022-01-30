@@ -121,3 +121,6 @@ I think Prot roughly goes by use case? Maybe fully, can't remember.
 
 ** TODO review [[https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.100.7566&rep=rep1&type=pdf][Theme-Based Literate Programming]]
 
+** TODO http://akkartik.name/post/literate-programming
+
+   this article criticizes the style of literate programming i try to convince isn't as good as well.
