@@ -9,24 +9,95 @@ Typically use-package is the first and only way of organizing emacs configuratio
 
 It's natural that most kiterate configs would faithfully represent that organizational structure, but with the added benefit if collaosi ke nodes and perhaps notes on the entire use package block.
 
-  #+begin_src org
-    ,* use-package
-    ,** magit
-       ,#+begin_src elisp
-       (use-package magit)
-       ,#+end_src
-    ,** haskell-mode
-       ,#+begin_src elisp
-       (use-package magit)
-       ,#+end_src
-    ,** org-roam
-       ,#+begin_src elisp
-       (use-package magit)
-       ,#+end_src
-  #+end_src
+#+begin_src org
+  ,* use-package
+  ,** magit
+  ,#+begin_src elisp
+    (use-package magit)
+  ,#+end_src
+  ,** haskell-mode
+  ,#+begin_src elisp
+    (use-package haskell-mode)
+  ,#+end_src
+  ,** org-roam
+  ,#+begin_src elisp
+    (use-package org-roam)
+  ,#+end_src
+  ,** git-time-machine
+  ,#+begin_src elisp
+    (use-package git-time-machine)
+  ,#+end_src
+  ,** python-mode
+  ,#+begin_src elisp
+    (use-package python-mode)
+  ,#+end_src
+  ,** lsp-mode
+  ,#+begin_src elisp
+    (use-package lsp-mode)
+  ,#+end_src
+  ,** lsp-haskell
+  ,#+begin_src elisp
+    (use-package lsp-haskell)
+  ,#+end_src
+
+#+end_src
 
 * Per use-case literate style
 
 Once your configuration starts getting really large, the use-package style can start losing meaning and feel very overwhelming.
 
-A solution is to organize by use case and use =noweb-ref= in case ordering matters to tangle the blocks organized by use case into use package blocks. Here's a
+A solution is to organize by use case and use =noweb-ref= in case ordering matters to tangle the blocks organized by use case into use package blocks. Here's an example:
+
+#+begin_src org
+  ,* My emacs use-cases
+  ,** Version control with Git
+  ,*** use magit as a porcelain
+  ,#+begin_src elisp
+   (use-package magit)
+  ,#+end_src
+  ,*** enable easily showing history of a file
+  ,#+begin_src elisp
+   (use-package git-time-machine)
+  ,#+end_src
+  ,** Haskell development
+  ,*** Haskell-mode provides most functionality
+  ,#+begin_src elisp
+   (use-package haskell-mode)
+  ,#+end_src
+  ,***  [[file:20220130030450-finding_the_best_style_of_literate_emacs_configuration.org::*Language Server Protocol for development in many languages][lsp-mode]] integration
+  ,#+begin_src elisp
+   (use-package lsp-haskell)
+  ,#+end_src
+  ,** Zettlekasten
+  ,#+begin_src elisp
+   (use-package org-roam)
+  ,#+end_src
+  ,** Language Server Protocol for development in many languages
+  ,*** lsp-mode
+  ,#+begin_src elisp
+   (use-package lsp-mode)
+  ,#+end_src
+  ,*** eglot                                                        :noexport:
+  ,#+begin_src elisp
+   (use-package lsp-mode)
+  ,#+end_src
+  ,** Python development
+  ,*** Python-mode provides most functionality
+  ,#+begin_src elisp
+   (use-package python-mode)
+  ,#+end_src
+  ,*** [[file:20220130030450-finding_the_best_style_of_literate_emacs_configuration.org::*Language Server Protocol for development in many languages][lsp-mode]] integration
+  ,#+begin_src elisp
+   (use-package lsp-python)
+  ,#+end_src
+#+end_src
+
+Here complexity only scales as your personal use-cases scale. There are a few interesting things to note about this example.
+
+** It's way less complex at a glance and can reflect your mental model of your work
+
+Our working memory can only handle 7 things at a time, so perhaps keeping your use cases categorized to be less than 7 would be a good idea?
+
+** As seen with eglot and =:noexport= separating by use-case lets you easily tryout different packages for given use-cases.
+
+Another example is =Narrowing framework= with consult active and ivy and helm tagged =noexport=.
