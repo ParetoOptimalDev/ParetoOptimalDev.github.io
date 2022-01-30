@@ -6,6 +6,10 @@ draft = false
 
 # How to use this exobrain
 
+Hi! I'm ParetoOptimalDev, or as twitter resorts to calling me [@ParetoOptimal_](https://twitter.com/ParetoOptimal_). Feel free to follow there if you want to see me look for people wrong on the internet :)
+
+Now about this mish-mash of stubs (seeds), articles, half-baked ideas, and hopefully soon golden nuggets of information:
+
 - Don't expect blog post quality or polish, the idea is to represent thoughts and ideas to grow them over time (expect [quality labeling](./categorizing-state/quality/-maturity-of-notes-with-tags-and-the-real-life-tree-lifecycle/) in the future though)
 - How to find content
   - Pick one of [listed topics](#topics-at-the-front-of-my-mind) and go exploring!
