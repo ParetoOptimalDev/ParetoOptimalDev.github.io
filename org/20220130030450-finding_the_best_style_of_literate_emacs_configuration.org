@@ -117,3 +117,7 @@ What about Alhassy, Prot, and Tecosaurs configs I have listed in [[id:37518482-c
 
 I think Prot roughly goes by use case? Maybe fully, can't remember.
 
+* TODO investigate prior work of wider literate programming community
+
+** TODO review [[https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.100.7566&rep=rep1&type=pdf][Theme-Based Literate Programming]]
+
