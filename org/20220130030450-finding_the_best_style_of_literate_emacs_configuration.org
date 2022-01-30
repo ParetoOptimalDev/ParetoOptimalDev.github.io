@@ -3,6 +3,8 @@
 :END:
 #+title: Finding the best style of literate emacs configuration
 
+I can't decide on the best style and I'd like to before I start writing [[id:ac851660-52e9-44bb-9cbf-5ac735326ae3][Managing your emacs configuration, system configuration, and all dependencies in a single org file]].
+
 * The typical per-package use-package literate style
 
 Typically use-package is the first and only way of organizing emacs configurations most emacsers are exposed to.
