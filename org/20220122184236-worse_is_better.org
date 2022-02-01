@@ -14,3 +14,7 @@ Also known as "New Jersey style".
 ** [[id:39a9cd0f-5719-4c02-ac54-419747ec1e47][Go]]
 
 ** [[id:b236fcd6-2ca6-436d-aa54-395d6e339d2b][Simple Haskell]]
+
+** Resources to review
+*** TODO https://yosefk.com/blog/what-worse-is-better-vs-the-right-thing-is-really-about.html
+    
