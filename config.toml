@@ -5,6 +5,7 @@ theme = "cortex"
 canonifyURLs = true
 relativeUrls = true
 staticDir = ["static", "org/data"]
+enableRobotsTXT = true
 
 [params]
 email = "pareto.optimal@mailfence.com"
