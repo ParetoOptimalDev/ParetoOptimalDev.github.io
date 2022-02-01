@@ -60,4 +60,4 @@ frequently use Esqueleto have used Beam in the past have looked on longingly at 
 None of them can do it, if you read the issues/source for VScode it doesn&amp;rsquo;t use a universal concept of windows/buffers, so the terminal is implemented in a &amp;ldquo;panel&amp;rdquo; which can&amp;rsquo;t be arbitrarily split, moved, edited in the same way as your code buffers.</description></item><item><title>worse is better</title><link>https://www.paretooptimal.dev/worse-is-better/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.paretooptimal.dev/worse-is-better/</guid><description>https://en.wikipedia.org/wiki/Worse%5Fis%5Fbetter
 Also known as &amp;ldquo;New Jersey style&amp;rdquo;.
 The Rise of ``Worse is Better''
-Related Go Simple Haskell</description></item></channel></rss>
+Related Go Simple Haskell Resources to review TODO https://yosefk.com/blog/what-worse-is-better-vs-the-right-thing-is-really-about.html</description></item></channel></rss>
