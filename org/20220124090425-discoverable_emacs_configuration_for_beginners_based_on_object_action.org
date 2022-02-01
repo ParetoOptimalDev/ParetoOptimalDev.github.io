@@ -71,3 +71,14 @@ And emacs is not very good at this, new users have to start tinkering to set up 
 
 I was impressed by vscode when I tried it, seeing how polished the experience is. I still use emacs, of course, but vscode can be a model of how the new user experience should be. - [[https://www.reddit.com/r/emacs/comments/d4nilk/comment/f0f683j/?utm_source=reddit&utm_medium=web2x&context=3][source]]
 #+end_quote
+
+
+* misc
+
+  Maybe we should add:
+
+    Loaded user-init-file: /home/user/.emacs
+
+To the welcome page.
+
+https://reddit.com/comments/shu3wd/comment/hv5gogo
