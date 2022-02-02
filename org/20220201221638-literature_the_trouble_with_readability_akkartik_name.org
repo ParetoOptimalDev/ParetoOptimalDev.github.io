@@ -1,0 +1,52 @@
+:PROPERTIES:
+:ID:       a5d05975-96b9-4bd5-aaa5-4dbe7bb776ff
+:END:
+#+title: Literature: The trouble with 'readability' - akkartik.name
+
+* http://akkartik.name/post/readable-bad
+
+* I can relate to this quote so very much
+
+#+begin_quote
+But when he gets to ‘how’, here is what we get: good names, comments and consistent indentation.
+Wait, what?! After all that discussion about how complex programs are, and how hard to
+understand, do we really expect to make a dent on global complexity with a few blunt, local rules?
+Does something not seem off? 
+#+end_quote
+
+I think it's why typical cleanups/modularizations can annoy me, because it doesn't really attack the problem of global complexity and is a [[id:4cf7ba2e-e038-424d-bb78-51381cdeb2e2][worse is better]] style of improvement.
+
+Though perhaps time spent thinking about how to solve global complexity in the [[id:6f866049-95a5-4b65-a735-f58f5b2b9dd3][better is better]] fashion would have not resulted in anything tangible.
+
+Typically understanding is strengthened in those exercises quite a lot. Is there perhaps a fallacy of focusing on "having something to show for it" to the detriment of the more optimal action that might not feel as meaningful?
+
+* Yes, the reason that =readability= discussions annoy me is because the avoid considering =global complexity=
+
+#+begin_quote
+Everytime the discussion turns to readability we skip almost unconsciously to
+style guides and whatnot. Local rules for a fundamentally global problem. 
+#+end_quote
+
+* One reason I believe [[id:69ec8283-15fc-49dc-9496-70183b30f044][Verbose function and variable names as a default result in more complex code]]
+
+* Ah, he's talking about the similarity I noticed of people talking about hyper-local complexity and shying away from global complexity being like bikeshedding
+
+Everyone can have an opinion on the color of the shed.
+
+#+begin_quote
+Part of the problem is that talking about local features is easy. It's easy to teach the difference
+between a good name and a bad name. Once taught, the reader has the satisfaction of going off to
+judge names all around him. It's far harder to show a globally coherent design without losing the
+reader. 
+#+end_quote
+
+* It always comes back to people or human problems ;)
+
+#+begin_quote
+Lots of thought has gone into the small-scale best practices to help maintainers merge changes from
+others, but there's been no attempt at learning to communicate large-scale organization to
+newcomers. Perhaps this is a different skill entirely; if so, it needs a different name than
+‘readability’. 
+#+end_quote
+
+

@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       3fb11cd7-0b46-4a1c-bba8-dfd84bfc0c59
+:END:
+#+title: Literature: A New Way to Organize Programs - akkartik.name
+http://akkartik.name/post/wart-layers

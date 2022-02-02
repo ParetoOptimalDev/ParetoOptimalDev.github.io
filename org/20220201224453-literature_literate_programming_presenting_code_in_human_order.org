@@ -1,0 +1,203 @@
+:PROPERTIES:
+:ID:       6610d224-6f8b-48ef-9d47-4fd2d9b57ee6
+:END:
+#+title: Literature: Literate programming: presenting code in human order
+
+* [[http://www.johndcook.com/blog/2016/07/06/literate-programming-presenting-code-in-human-order/][Literate programming: presenting code in human order]]
+
+** The leo editor for literate programming lets you clone nodes or transclude to accomplish [[id:c5dfed62-51e5-4fee-8ed1-b3b2c0c328e2][Literate Programming's super power: Speaking to different audiences]]
+
+* [[https://news.ycombinator.com/item?id=12046950][HackerNews Discussion]]
+
+** Literate programming but with many different presentations or paths of reading the program based on experience/need/use-case
+
+#+begin_quote
+" Peter Norvig 6 July 2016 at 11:47 I think the problem with Literate Programming is that assumes there is a single best order of presentation of the explanation. I agree that the order imposed by the compiler is not always best, but different readers have different purposes. You don’t read documentation like a novel, cover to cover. You read the parts that you need for the task(s) you want to do now. What would be ideal is a tool to help construct such paths for each reader, just-in-time; not a tool that makes the author choose a single pth for all readers."
+
+Has anyone attempted something like this?
+
+I've heard you can do transclusion in org-mode which might be a starting point
+
+Edit: Some initial ideas:
+
+- Code can be deconstructed into blocks, and where the code is not self-documenting, prose can be added. Or even visualisations etc if a block is conceptually tricky to grok. You could even have MOOC-style validations to verify reader understanding for each block.
+
+- Some kind of topology of the blocks should be generated based on how they interact and how they are conceptually related
+
+- The author creates a few 'starting points' for different audiences, e.g. 'if you've used X before, start at Y'
+
+- From there next blocks to read are auto-suggested to the user. A map or network diagram of all blocks is also provided so the reader can chart their progress and see where the 'big ideas' lie.
+
+Edit 2: This also really reminds me of Bret Victor's 'Humane Representation of Thought' lecture (https://vimeo.com/115154289, 45:40) where he says there is a conflict between code being an engineering specification and an authored work meant to be read by humans. - [[https://news.ycombinator.com/item?id=12048821][source]]
+#+end_quote
+
+I hope to expand on this one day in [[id:c5dfed62-51e5-4fee-8ed1-b3b2c0c328e2][Literate Programming's super power: Speaking to different audiences]]
+
+** "[[id:8a13311f-2174-4765-9786-1a81e28a18e9][Literate Programming]] gets in the way when you need to fix a bug"
+
+#+begin_quote
+literate prose and structure tends to get in the way when you are trying to,
+ say, add a new feature or fix a bug. 
+#+end_quote
+
+How? Maybe I'm just thinking in an emacs-centric way here where I can always search via plain text? Perhaps their thought is of reading through a pdf without easy access to the source code to rebuild the pdf (program)?
+
+I'd imagine instead of grepping for an error string I'd =C-f= for it instead inside of my literate org program. Then once I landed there be able to fix the issue, and pay some reasonable amount of attention to the prose that's trying to teach me the context of this piece of code.
+
+#+begin_quote
+ I still think it’s great tool to think clearly, especially when you have somethings like Emacs Org +
+ Babel at your disposal, but LP it’s not a great fit for regular projects.
+#+end_quote
+
+The conclusion doesn't necessarily follow? Especially if those issues are relatively easy to overcome, which to me, they don't seem too difficult.
+
+** I think most concerns around [[id:8a13311f-2174-4765-9786-1a81e28a18e9][Literate Programming]] boil down to "I don't trust the person to communicate the right things to me"
+
+#+begin_quote
+I think that one of the main drawbacks of this style is the fact that the code
+ is intermingled with the text and that makes the code more confusing. The code is never
+ complete and you always have to jump back and forward to see the other parts of the algorithm
+ and this just makes it harder to understand how the algorithm actually works.
+#+end_quote
+
+** Aha, in the comments is the author of [[id:3fb11cd7-0b46-4a1c-bba8-dfd84bfc0c59][Literature: A New Way to Organize Programs - akkartik.name]] :)
+
+** AND the presenter from [[id:e77a19c0-d2c9-4f12-98f8-41d92233f7d6][Literature: Literate Programming in the Large - Timothy Daly]] :)
+
+And he has a book recommendation that intrigues me:
+
+#+begin_quote
+ If you want to see a real literate program done well, buy the book “Physically Based Rendering”
+ (it won an Academy Award). 
+#+end_quote
+
+Ah it's freely available online. I create and add [[id:89f23574-70ac-4795-a232-64a919407832][Literature: Physically Based Rendering (literate program)]] to [[id:ec8e2147-462f-46aa-9026-4ab9f2367931][Best examples of Literate Programming]]
+
+** "literate programming is for the poor souls who have to maintain your magic code piles" lol
+
+#+begin_quote
+ Literate programs aren’t just for you. They aren’t just for now. They are there to capture the
+ “WHY” for the poor souls who have to maintain your magic code piles.
+#+end_quote
+
+
+** Discovery to a style of literate programming organization in [[id:3fb11cd7-0b46-4a1c-bba8-dfd84bfc0c59][Literature: A New Way to Organize Programs - akkartik.name]]
+
+#+begin_quote
+I use a layer-based approach described at http://akkartik.name/post/wart-layers in https://github.com/akkartik/mu. It's 20kLoC of literate code, and I was super concerned about optimizing it for non-linear reading, because that's how I need to browse the code for myself. It's not a system to generate multiple views like you want; instead, it's a single view that I find easy to skim and easy to reorganize at will:
+a) Each layer puts more important stuff up top. So you can start skimming from the first layer, but you don't have to read all the way down each layer, just get a sense of what it provides and why.
+
+b) There's not much emphasis on lengthy comments (which would get linear). Instead just the order in which code is presented does a lot of heavy lifting.
+
+c) The tangled code is intended to be readable (unlike Knuth's original tools), so I often jump down into it when I feel the need. Error messages and debugger support do show lines in the original literate sources, however.
+#+end_quote
+
+** More on [[id:b5d58a32-41ee-43db-b257-beebd304007b][Organizing programs in human order with literate programming]]
+
+#+begin_quote
+> Has anyone attempted something like this?
+Yes, I write all my personal projects in human order. To me human order is when the flow control of human consumption and computer execution are most closely aligned. I attempt to achieve this with depth and order.
+
+1) Have a giant library that defines your library or application.
+
+2) Inside the giant function nest child functions for the primary tasks in the order with which they will execute. In the case of the following example the options evaluation is first, followed by the lexer/parser is the second child task, followed by various code presentation tasks, and finally by an analysis task. http://prettydiff.com/lib/jspretty.js
+
+3) Break the child tasks down, as necessary, into reusable components.
+
+4) I also believe a reference should always be declared before it used, which can dictate the order of reference declaration.
+
+My opinion is that when the flow control of the application is unclear you are wasting time during maintenance. You may not know where a problem is occurring, but if the flow of the application is immediately clear from reading the code you immediately know where to start, where to step to next, and where to stop. There is minimal guessing and it doesn't require breakpoints to figure it out.
+#+end_quote
+
+** Cool project supposedly doing some of this literature programming stuff that's taken down now
+
+#+begin_quote
+My hobby project, with dependency graph visualized:
+https://e8vm.io/e8vm
+
+Source code:
+
+https://github.com/e8vm/e8vm
+#+end_quote
+
+Or maybe not? I don't see any of the concepts in this [[https://web.archive.org/web/20160207175923/https://github.com/e8vm/e8vm][wayback link]] anyway
+
+** Someone saying basically saying "[[id:8a13311f-2174-4765-9786-1a81e28a18e9][Literate Programming]] sounds nice but falls down in the real world"
+
+
+
+#+begin_quote
+His comment sums up exactly my thoughts wrt literate programming. It sounds like a nice idea, but in practice it falls far short.
+The worst program I've ever had to maintain was written in funnelweb. It was a large, complicated program, so the funnelweb-generated documentation was tens of thousands of pages long. Nobody was ever going to read that. Trying to find out what you needed to modify to fix a bug was impossible from that document. Most developers I know looked at the woven C code (after all, that's where the line numbers in the stack trace pointed to), and worked from there.
+#+end_quote
+
+Well if it's _just_ that reason, it doesn't seem too difficult to get tracebacks to work with the tangled files. I suppose it'd be a naturaly but noiser extension of detangling.
+
+** a very ANTI-[[id:8a13311f-2174-4765-9786-1a81e28a18e9][Literate Programming]] commenter
+*** quote
+#+begin_quote
+We have tools that let you examine code from various angles. There is no need to encode some "human order" in the code itself. Code should be organized in the way that harmonizes with the module structure and promotes maintainability, without regard for some "human order" nonsense.
+Who decides what is "human order"? Humans want things in different order for different purposes. For example, business software generates all sorts of reports of different kinds from the same data.
+
+This is wrong:
+
+> Traditional source code, no matter how heavily commented, is presented in the order dictated by the compiler.
+
+This is only true of one-pass, strict definition-before-use, single-module-only programming languages, like toy versions of Pascal.
+
+In any decent language, we can take exactly the same program, and permute the order of its elements with a great deal of liberty, and present them in that order to the compiler. We can decide which functions go into which modules, and we can have those functions in different orders regardless of what calls what.
+
+Ah, but some of the more crazy proponents of literate programming are not satisfied with that granularity. It bothers them that the individual statements of a program that are to be executed in sequence have to be presented to the compiler in that sequence: S1 ; S2.
+
+Knuth's outlandish version, in particular, stretches the meaning of "literate" by turning code into a dog's breakfast in which functions are chopped into blocks. For compilation, these blocks are re-assembled by the "literate" processor into functions.
+
+The result is difficult to understand. Yes, the nice explanations and presentation order may present something which makes sense. But here is the rub: I don't just want to follow the presentation of a program, I want to understand it for myself and convince myself that it is correct. For that, I need to ignore all the text, which, for all I know, only expresses the author's wishful belief about the code.
+#+end_quote
+
+Perhaps some of these points could be explored or expanded on in [[id:01a9e791-2442-4608-810d-25333b812d06][The case against Literate Programming]] which for me now, would be a good opposing opinion to [[id:52376812-2211-4a82-b546-321b7661d225][counteract my cognitive biases by playing devils advocate]]
+*** "We have tools that let you examine code from various angles."
+
+Do we? What angles? The module hierarchy? Isn't that just a less up to date hierarchy that's harder to change than a literate program?
+
+*** "There is no need to encode some "human order" in the code itself."
+
+LOL... that's already going to get encoded... the question is will it be a primary or as is the case in the software industry I've experienced... very second-hand concern?
+
+*** Who decides what is "human order"? Humans want things in different order for different purposes. For example, business software generates all sorts of reports of different kinds from the same data.
+
+Humans of course ;)
+
+The point about businesses and multiple views of data is a good one though, and makes me more excited about how good of a solution (if annoying for the one writing it) [[*Literate programming but with many different presentations or paths of reading the program based on experience/need/use-case][Literate programming but using many different presentations based on experience/use-case]] could be.
+
+*** Ah, but some of the more crazy proponents of literate programming are not satisfied with that granularity.
+
+#+begin_quote
+It bothers them that the individual statements of a program that are to be executed in sequence have to be presented to the compiler in that sequence: S1 ; S2.
+#+end_quote
+
+Yeah, perhaps in =S1..S100=, I'd like =S25-70= to be a footnote because it's not important to understanding the main idea. Perhaps I want to enable those who don't know specifics of a domain the ability to criticize my architecture?
+
+*** Yes, the nice explanations and presentation order may present something which makes sense.
+
+#+begin_quote
+But here is the rub: I don't just want to follow the presentation of a program, I want to understand it for myself and convince myself that it is correct.
+#+end_quote
+
+Not that I don't get the mistrust, but that mindset keeps you stuck in what we have in the same way people were stuck in non-modular programming. Perhaps they could have said:
+
+#+begin_quote
+But here is the rub: I don't just want to follow the presentation of a programmers module and "structure", I want to all of the statements in one file to  understand it for myself and convince myself that it is correct.
+#+end_quote
+
+** There was some relation here to [[id:a5d05975-96b9-4bd5-aaa5-4dbe7bb776ff][Literature: The trouble with 'readability' - akkartik.name]] as well, namely this quote
+
+#+begin_quote
+Here's a paean to the software quality of Doom 3. It starts out with this utterly promising ideal: 
+
+“Local code should explain, or at least hint at, the overall system design.” 
+#+end_quote
+
+Which I believe is one of the most important things... typically you "start in main" and go to definition ("dumbly" with grep or with tags or editor support).
+
+This is workable, but when you go-to definition, you have to rebuild the contextual link between those things. What if there are edge cases? Well there's kind of an anti-commenting thing because "my code is self-documenting" thing that's popular now... so what if it wasn't deemed important enough to over come that?
+

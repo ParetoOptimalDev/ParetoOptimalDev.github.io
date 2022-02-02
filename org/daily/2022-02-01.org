@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       3e0fb7f3-525f-4a14-816b-aa8c65c7f4b6
+:END:
+#+title: 2022-02-01
+* In general, I was searching for [[https://www.google.com/search?q=%22literate+programming+in+the+large][literate programming in the large]] after watching [[id:e77a19c0-d2c9-4f12-98f8-41d92233f7d6][Literature: Literate Programming in the Large - Timothy Daly]]
+** [[id:3fb11cd7-0b46-4a1c-bba8-dfd84bfc0c59][Literature: A New Way to Organize Programs - akkartik.name]]
+** [[id:6610d224-6f8b-48ef-9d47-4fd2d9b57ee6][Literature: Literate programming: presenting code in human order]]
+* Also thinking about [[id:4cf7ba2e-e038-424d-bb78-51381cdeb2e2][worse is better]] and had some links there, but perhaps I'll add them tomorrow
+* general programming related
+** [[id:a5d05975-96b9-4bd5-aaa5-4dbe7bb776ff][Literature: The trouble with 'readability' - akkartik.name]]
+* A cool test of [[id:e77a19c0-d2c9-4f12-98f8-41d92233f7d6][Literature: Literate Programming in the Large - Timothy Daly]] would be to rewrite Haskell's Pandoc as a literate program ([[id:70eccb0d-a16f-4e2a-ac1f-327350277572][cool project idea]])

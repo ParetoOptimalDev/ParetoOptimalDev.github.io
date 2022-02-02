@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       e77a19c0-d2c9-4f12-98f8-41d92233f7d6
+:END:
+#+title: Literature: Literate Programming in the Large - Timothy Daly
+
+
+* https://www.youtube.com/watch?v=Av0PQDVTP4A
+
+* [[http://www.axiom-developer.org/][Axiom Computer Algebra System]]
+
+https://github.com/daly/axiom

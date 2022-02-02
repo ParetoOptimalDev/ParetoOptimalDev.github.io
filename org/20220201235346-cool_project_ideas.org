@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       70eccb0d-a16f-4e2a-ac1f-327350277572
+:ROAM_ALIASES: "cool project idea"
+:END:
+#+title: cool project ideas
+

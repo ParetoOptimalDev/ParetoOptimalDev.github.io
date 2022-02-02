@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       b5d58a32-41ee-43db-b257-beebd304007b
+:END:
+#+title: Organizing programs in human order with literate programming
+
+
+
+* Most people comment the what instead of the why
+
+** worse yet, people talk only about the why in a very narrow context when they, perhaps, could communicate the nuances of it's place in the wider interconnected web of the software
+
+

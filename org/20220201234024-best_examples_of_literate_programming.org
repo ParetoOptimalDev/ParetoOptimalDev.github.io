@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       ec8e2147-462f-46aa-9026-4ab9f2367931
+:END:
+#+title: Best examples of Literate Programming
+
+
+* [[id:89f23574-70ac-4795-a232-64a919407832][Literature: Physically Based Rendering (literate program)]]
+
+* [[https://www.cambridge.org/core/login?ref=/core/books/lisp-in-small-pieces/66FD2BE3EDDDC68CA87D652C82CF849E][Lisp in Small Pieces]]

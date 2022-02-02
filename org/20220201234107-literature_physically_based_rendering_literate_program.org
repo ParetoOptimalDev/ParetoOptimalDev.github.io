@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       89f23574-70ac-4795-a232-64a919407832
+:END:
+#+title: Literature: Physically Based Rendering (literate program)
+
+
+https://pbrt.org
+
+#+begin_quote
+This book has deservedly won an Academy Award. I believe it should also be nominated for a Pulitzer Prize —
+Donald Knuth
+#+end_quote
+
+[[https://pbr-book.org/][full contents of the third edition are now freely available online]]

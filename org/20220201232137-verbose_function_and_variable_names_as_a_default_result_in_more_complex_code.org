@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       69ec8283-15fc-49dc-9496-70183b30f044
+:END:
+#+title: Verbose function and variable names as a default result in more complex code
+
+
+Primarily because they sacrifice global understanding for very very local understanding. This plays into the problem of caring about local complexity rather than global complexity.
+
+Or as I worded it differently a bit ago, [[id:e87d8f66-b3a7-4a53-845e-620c50f11c5b][Prefer macro-level simplicity even if it means micro-level complexity]].
