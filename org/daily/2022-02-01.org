@@ -13,4 +13,5 @@
 * Oh, I should rewrite this blog into a literate program ([[id:70eccb0d-a16f-4e2a-ac1f-327350277572][cool project idea]])
 * Commento comments not working in stacked frame pages :/
 ** https://gitlab.com/commento/commento/-/merge_requests/182
+** I [[https://github.com/souramoo/commentoplusplus/issues/68][created an issue]] on the fork that has updates while original owner is MIA or on a loooong break
 
