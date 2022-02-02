@@ -3,4 +3,62 @@
 :END:
 #+title: Provisioning a sample database along with postgres in nixos
 
-TODO
+* rough copy paste
+
+This assumes a devos like setup but could be adapted easily I think
+
+** nix expression for northwind sql create statement/etc
+#+begin_src nix
+{ stdenv, pkgs, lib }:
+
+let
+  sql-file = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/pthom/northwind_psql/c1035fc5b5dfa45f164a7bc4a1632656f0025642/northwind.sql";
+    sha256 = "1dk9x2hfikw2xpnl2v3j5r8k2cc32srldg2z7c2z20m17aamykpp";
+  };
+in
+stdenv.mkDerivation {
+  pname = "northwind-sql";
+  version = "0.0.1";
+  builder = pkgs.writeText "builder.sh" ''
+  . $stdenv/setup
+  mkdir -pv $out/share/
+  cp ${sql-file} $out/share/northwind.sql
+  '';
+  meta = with lib; {
+    description = "the microsoft northwind db";
+    homepage = "https://github.com/pthom/northwind_psql";
+    platforms = platforms.all;
+  };
+}
+#+end_src
+
+** postgres service
+
+This assumes your username is =nixos=, if not you should change it :)
+
+#+begin_src nix
+  services.postgresql = {
+    enable = false;
+    port = 5435;
+    authentication = pkgs.lib.mkOverride 10 ''
+      local all all trust
+      host all all ::1/128 trust 
+    '';
+
+    # GRANT ALL ON ALL TABLES IN SCHEMA PUBLIC TO nixos;
+    initialScript = pkgs.writeText "backend-initScript" ''
+      CREATE ROLE nixos WITH LOGIN PASSWORD 'nixos' CREATEDB;
+      GRANT postgres TO nixos
+      CREATE DATABASE nixos;
+      CREATE DATABASE northwind;
+      \c northwind;
+      \i ${pkgs.northwind-sql}/share/northwind.sql
+    '';
+  };
+#+end_src
+
+** =NOTE= if things get in a bad state you'll have to delete =/var/postgres= or w/e the folder is for =initialScript= to run again
+
+I think there's a new =ensureSchema= functionality to fix this state issue but I haven't looked at it yet.
+
