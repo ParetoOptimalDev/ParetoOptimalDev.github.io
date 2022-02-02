@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       f664e095-d175-4f5c-a3cd-d86fc7049726
+:END:
+#+title: Literature: Habitability and Piecemeal Growth - akkartik.name
+
+https://www.dreamsongs.com/Files/PatternsOfSoftware.pdf
