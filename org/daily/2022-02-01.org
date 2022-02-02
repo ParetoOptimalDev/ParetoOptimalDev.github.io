@@ -11,3 +11,6 @@
 * A cool test of [[id:e77a19c0-d2c9-4f12-98f8-41d92233f7d6][Literature: Literate Programming in the Large - Timothy Daly]] would be to rewrite Haskell's Pandoc as a literate program ([[id:70eccb0d-a16f-4e2a-ac1f-327350277572][cool project idea]])
 * [[id:f664e095-d175-4f5c-a3cd-d86fc7049726][Literature: Habitability and Piecemeal Growth - akkartik.name]]
 * Oh, I should rewrite this blog into a literate program ([[id:70eccb0d-a16f-4e2a-ac1f-327350277572][cool project idea]])
+* Commento comments not working in stacked frame pages :/
+** https://gitlab.com/commento/commento/-/merge_requests/182
+
