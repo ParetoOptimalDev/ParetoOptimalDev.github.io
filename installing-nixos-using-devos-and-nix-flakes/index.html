@@ -57,7 +57,7 @@ dd if=path-to-image of=/dev/sdX bs=4096 status=progress go for a short walk run 
 </code></pre></div><p><a id=code-snippet--gcUvLym3gWWb9VUxw2RxYt></a></p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>  mkdir -p /mnt/tmpstore/<span style=color:#f92672>{</span>work,store<span style=color:#f92672>}</span>
 mount -t overlay overlay -olowerdir<span style=color:#f92672>=</span>/nix/store,upperdir<span style=color:#f92672>=</span>/mnt/tmpstore/store,workdir<span style=color:#f92672>=</span>/mnt/tmpstore/work /nix/store
-</code></pre></div><h2 id=do-the-hardware-configuration-correctly-unlike-me-the-first-time--orgfae468a><a href=#do-the-hardware-configuration-correctly>Do the hardware configuration correctly unlike me the first time</a></h2>
+</code></pre></div><h2 id=do-the-hardware-configuration-correctly-unlike-me-the-first-time--org48417ae><a href=#do-the-hardware-configuration-correctly>Do the hardware configuration correctly unlike me the first time</a></h2>
 <h2 id=start-installing-from-flake>Start installing from flake</h2>
 <p><a id=code-snippet--n6AxfuoaTsa475Uap6eCSh></a></p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>nixos-install --flake .#NixOS
@@ -104,8 +104,8 @@ fileSystems<span style=color:#f92672>.</span><span style=color:#e6db74>&#34;/boo
 <div class=bl-section>
 <h4>Comments</h4>
 <div class=backlinks>
-<script defer data-page-id=/installing-nixos-using-devos-and-nix-flakes/ data-id-root=/installing-nixos-using-devos-and-nix-flakes/ src=https://cdn.commento.io/js/commento.js></script>
-<div id=/installing-nixos-using-devos-and-nix-flakes/></div>
+<script defer data-page-id=installing-nixos-using-devos-and-nix-flakes data-id-root=installing-nixos-using-devos-and-nix-flakes src=https://cdn.commento.io/js/commento.js></script>
+<div id=installing-nixos-using-devos-and-nix-flakes></div>
 </div>
 </div>
 </div>
