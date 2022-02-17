@@ -1,13 +1,12 @@
-<!doctype html><html><title>Demonstrating Haskell is really fast to those unfamiliar with it - Pareto Optimal Dev</title>
+<!doctype html><html><title>How database models in domain logic undermine type-safety - Pareto Optimal Dev</title>
 <meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name=apple-mobile-web-app-capable content="yes">
-<meta name=description content="Motivation I&rsquo;ve had this idea before, but actually creating this page was inspired by a tweet:
- Does anybody have in mind a good way how to show people not familiar with Haskell that it&rsquo;s really fast?
-Probably something other than this https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/haskell.html
-Maybe anyone has real experience of migrating the project from JVM to Haskell or something similar?
- This also brings to mind How to make Haskell the programming industry default (that&rsquo;s a tall order!">
+<meta name=description content="Imagine you have a User model:
+data User = User { userId :: Int , userName :: String } To keep things &ldquo;simple&rdquo; (for at least our brand of simplicity) and not duplicate code we also use this type in our domain logic.
+userSignup :: Servant.Handler userSignup = do -- ... snip ... runDB insert User{..} TODO change welcome example to content or article ex
+Then akso on the welcome page greeting after a user signs in:">
 <link rel=stylesheet href=https://www.paretooptimal.dev/css/main.min.7f329dc288398e321d615d311bbce4d6702ad1df8156a76b70b7b3846175a07c.css>
 <script defer data-domain=paretooptimal.dev src=https://plausible.io/js/plausible.outbound-links.js></script>
 <body><header>
@@ -23,34 +22,55 @@ Maybe anyone has real experience of migrating the project from JVM to Haskell or
 <div class=grid>
 <div class=page data-level=1>
 <div class=content>
-<h1>Demonstrating Haskell is really fast to those unfamiliar with it</h1>
-<h2 id=motivation>Motivation</h2>
-<p>I&rsquo;ve had this idea before, but actually creating this page was inspired by a tweet:</p>
-<blockquote>
-<p>Does anybody have in mind a good way how to show people not familiar with Haskell that it&rsquo;s really fast?</p>
-<p>Probably something other than this <a href=https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/haskell.html>https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/haskell.html</a></p>
-<p>Maybe anyone has real experience of migrating the project from JVM to Haskell or something similar?</p>
-</blockquote>
-<p>This also brings to mind <a href=../how-to-make-haskell-the-programming-industry-default/>How to make Haskell the programming industry default</a> (that&rsquo;s a tall order!)</p>
-<h2 id=easy-parallel-downloading>easy parallel downloading</h2>
-<p>One common task across programming languages is downloading things in parallel and Haskell makes this very easy to do fast.</p>
-<p>Untype checked Haskell warning:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>import</span> Network.HTTP
-<span style=color:#a6e22e>siteResponses</span> <span style=color:#f92672>&lt;-</span> simpleHTTP (getRequest <span style=color:#e6db74>&#34;http://www.haskell.org/&#34;</span>) <span style=color:#f92672>&lt;*&gt;</span> simpleHTTP (getRequest <span style=color:#e6db74>&#34;http://www.twitter.com/&#34;</span>) <span style=color:#f92672>&lt;*&gt;</span> simpleHTTP (getRequest <span style=color:#e6db74>&#34;http://www.twitter.com/&#34;</span>)
-<span style=color:#66d9ef>let</span> getFirst100BytesFromResponse rsp <span style=color:#f92672>=</span> fmap (take <span style=color:#ae81ff>100</span>) (getResponseBody rsp)
-<span style=color:#a6e22e>fmap</span> getFirst100BytesFromResponse siteResponses
-</code></pre></div><h2 id=streamly><span class="org-todo todo TODO">TODO</span> streamly</h2>
-<h2 id=haxly><span class="org-todo todo TODO">TODO</span> haxly</h2>
-<h2 id=vector><span class="org-todo todo TODO">TODO</span> vector</h2>
-<h2 id=brainstorm-laziness-examples><span class="org-todo todo TODO">TODO</span> brainstorm laziness examples?</h2>
+<h1>How database models in domain logic undermine type-safety</h1>
+<p>Imagine you have a User model:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>User</span> <span style=color:#f92672>=</span>
+  <span style=color:#66d9ef>User</span> { userId <span style=color:#f92672>::</span> <span style=color:#66d9ef>Int</span>
+       , userName <span style=color:#f92672>::</span> <span style=color:#66d9ef>String</span>
+       }
+</code></pre></div><p>To keep things &ldquo;simple&rdquo; (for at least our <a href=../brand-of-simplicity/>brand of simplicity</a>) and not duplicate code we also use this type in our domain logic.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>userSignup</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Servant</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Handler</span>
+<span style=color:#a6e22e>userSignup</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
+  <span style=color:#75715e>-- ... snip ...</span>
+  runDB insert <span style=color:#66d9ef>User</span>{<span style=color:#f92672>..</span>}
+</code></pre></div><p>TODO change welcome example to content or article ex</p>
+<p>Then akso on the welcome page greeting after a user signs in:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>welcome</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>Servant</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Handler</span>
+<span style=color:#a6e22e>welcome</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
+  <span style=color:#75715e>-- ... snip ...</span>
+  putStrLn <span style=color:#e6db74>&#34;Hello &#34;</span> <span style=color:#f92672>++</span> userName u
+</code></pre></div><p>Your site starts getting popular, but currently obly has free users. You are tasked with creating paid content that only premium users can access.</p>
+<p>Trying to find the fastest si,plest solution without any re-architecting you make a few changes.</p>
+<p>You update the User to have a type field. For type safety, you make this an ADT:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#66d9ef>data</span> <span style=color:#66d9ef>UserType</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>Free</span> <span style=color:#f92672>|</span> <span style=color:#66d9ef>Premium</span>
+<span style=color:#66d9ef>data</span> <span style=color:#66d9ef>User</span> <span style=color:#f92672>=</span>
+  <span style=color:#66d9ef>User</span> { userId <span style=color:#f92672>::</span> <span style=color:#66d9ef>Int</span>
+       , userName <span style=color:#f92672>::</span> <span style=color:#66d9ef>String</span>
+       , userType <span style=color:#f92672>::</span> <span style=color:#66d9ef>UserType</span>
+       }
+</code></pre></div><p>Then your updated article handler looks like:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-haskell data-lang=haskell><span style=color:#a6e22e>serveArticle</span> <span style=color:#f92672>::</span> <span style=color:#66d9ef>ArtickeID</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Servant</span><span style=color:#f92672>.</span><span style=color:#66d9ef>Handler</span>
+<span style=color:#a6e22e>serveArticle</span> aId <span style=color:#f92672>=</span> <span style=color:#66d9ef>do</span>
+  <span style=color:#75715e>-- ... snip ...</span>
+  a <span style=color:#f92672>&lt;-</span> runDB <span style=color:#f92672>$</span> getArticke aId
+  <span style=color:#66d9ef>case</span> artickeType a <span style=color:#66d9ef>of</span>
+    <span style=color:#66d9ef>PremiumArticle</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>case</span> userType u <span style=color:#66d9ef>of</span>
+	<span style=color:#66d9ef>Free</span> <span style=color:#f92672>-&gt;</span> <span style=color:#66d9ef>Http400</span> <span style=color:#e6db74>&#34;denied&#34;</span>
+	<span style=color:#66d9ef>Premium</span> <span style=color:#f92672>-&gt;</span> displayArticle articke
+</code></pre></div><p>A couple weeks go by and you have 20 or 30 premium users. In order to keep them, the produvt owner asks you to implement a rewards point system onlybapplicable to Premium users. Each time a premium user reads a premium article they get 5 points and 1 point for any free article.</p>
+<p>TODO premium users should have rewardPoints that increment every day, free users don&rsquo;t have any
+TODO vroadcast messages to all users
+TODO demo a more type safe approach</p>
+<p>then talk about how default things two separating model and domain types even in very simple cases is probably a good ideabecause of the fact how you architecture things every step of the waywith its resistance</p>
+<p>and go over how to recover if you are in this sityation</p>
 </div>
 <div class=bl-section>
 <h4>Comments</h4>
 <div class=backlinks>
-<script defer data-id-root=demonstrating-haskell-is-really-fast-to-those-unfamiliar-with-it data-page-id=demonstrating-haskell-is-really-fast-to-those-unfamiliar-with-it data-auto-init=false src=https://cdn.commento.io/js/commento.js></script>
+<script defer data-id-root=how-database-models-in-domain-logic-undermine-type-safety data-page-id=how-database-models-in-domain-logic-undermine-type-safety data-auto-init=false src=https://cdn.commento.io/js/commento.js></script>
 <a href=# onclick=window.commento.main()>View/Make Comment</a>
 <div id=commento></div>
-<div id=demonstrating-haskell-is-really-fast-to-those-unfamiliar-with-it></div>
+<div id=how-database-models-in-domain-logic-undermine-type-safety></div>
 </div>
 </div>
 </div>
