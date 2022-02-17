@@ -1,0 +1,76 @@
+:PROPERTIES:
+:ID:       effccab6-877a-41e2-ac78-15e42b505c45
+:END:
+#+title: How database models in domain logic undermine type-safety
+
+Imagine you have a User model:
+
+#+begin_src haskell
+  data User =
+    User { userId :: Int
+	 , userName :: String
+	 }
+#+end_src
+
+To keep things "simple" (for at least our [[id:a35569f6-abe4-443b-9d3d-308b4f24b132][brand of simplicity]]) and not duplicate code we also use this type in our domain logic.
+
+#+begin_src haskell
+  userSignup :: Servant.Handler
+  userSignup = do
+    -- ... snip ...
+    runDB insert User{..}
+#+end_src
+
+
+TODO change welcome example to content or article ex
+
+Then akso on the welcome page greeting after a user signs in:
+
+#+begin_src haskell
+  welcome :: Servant.Handler
+  welcome = do
+    -- ... snip ...
+    putStrLn "Hello " ++ userName u
+#+end_src
+
+Your site starts getting popular, but currently obly has free users. You are tasked with creating paid content that only premium users can access.
+
+Trying to find the fastest si,plest solution without any re-architecting you make a few changes.
+
+You update the User to have a type field. For type safety, you make this an ADT:
+
+#+begin_src haskell
+  data UserType = Free | Premium
+  data User =
+    User { userId :: Int
+	 , userName :: String
+	 , userType :: UserType
+	 }
+#+end_src
+
+Then your updated article handler looks like:
+
+#+begin_src haskell
+  serveArticle :: ArtickeID -> Servant.Handler
+  serveArticle aId = do
+    -- ... snip ...
+    a <- runDB $ getArticke aId
+    case artickeType a of
+      PremiumArticle -> case userType u of
+	  Free -> Http400 "denied"
+          Premium -> displayArticle articke
+#+end_src
+
+A couple weeks go by and you have 20 or 30 premium users. In order to keep them, the produvt owner asks you to implement a rewards point system onlybapplicable to Premium users. Each time a premium user reads a premium article they get 5 points and 1 point for any free article.
+
+
+
+
+TODO premium users should have rewardPoints that increment every day, free users don't have any
+TODO vroadcast messages to all users
+TODO demo a more type safe approach
+
+then talk about how default things two separating model and domain types even in very simple cases is probably a good ideabecause of the fact how you architecture things every step of the waywith its resistance
+
+
+and go over how to recover if you are in this sityation
