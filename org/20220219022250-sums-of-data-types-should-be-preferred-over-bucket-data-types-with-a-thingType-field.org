@@ -136,7 +136,68 @@ module Main where
 
 
 
-** Comparing the calling code
+** Edit: A suggestion from a user on the Haskell discord that is correct by construction and ergonomic
+
+** types
+
+#+begin_src haskell
+data UserType = FreeUser | PaidUser PaidUserData
+data User =
+  User { userId :: Int
+       , userName :: String
+       , userType :: UserType
+       }
+
+data PaidUserData = PaidUserData
+  { userRewardPoints :: Int
+  }
+#+end_src
+
+#+begin_src haskell
+data FreeArticle =
+  FreeArticle { freeArticleId :: Int
+              , freeArticleName :: String
+              }
+data PaidArticle =
+  PaidArticle { paidArticleId :: Int
+              , paidArticleName :: String
+              }
+data Article =  Free FreeArticle | Paid PaidArticle
+#+end_src
+
+
+*** this is correct by construction by moving the variation into the sum type
+
+#+begin_src haskell
+User { userId = 0
+     , userName "h4x0r"
+     , userType = FreeUser
+     } 
+#+end_src
+
+*** case
+
+#+begin_src haskell :noweb-ref serveArticle :tangle no
+serveArticle :: ArticleID -> Servant.Handler
+serveArticle aId = do
+  -- ... snip ...
+  a <- runDB $ getArticle aId
+  case u of
+    PaidUser pu ->
+      case a of
+        PaidArticle pa -> do
+          runDB $ upsert user { paidUserRewardPoints = (+ 5) (paidUserRewardPoints pu) }
+          displayArticle pa
+        FreeArticle fa -> do
+          runDB $ upsert user { paidUserRewardPoints = (+ 2) (paidUserRewardPoints pu) }
+          displayArticle fa
+    FreeUser _ -> case articleType a of
+        PaidArticle _ -> Http400 "denied"
+        FreeArticle fa -> displayArticle fa
+#+end_src
+
+
+*** Comparing the calling code
 
 We case differently on both user and article with these approaches. Does either seem advantageous?
 
@@ -209,7 +270,7 @@ Paid (PaidUser
 #+end_src
 
 
-** conclusion
+** TODO conclusion                                                 :revisit:
 
 *** sum of different types only really big advantage is being correct by construction
 
@@ -218,3 +279,7 @@ Paid (PaidUser
 ***** this typically has a side effect of having to laboriously validate this type in calling code over and over, hiding other codes intention infectiously
 
 *** Sums of data types should be preferred over "bucket" data types with a `thingType` field
+
+*** Contradicting the previous statement and this page, perhaps the core issue is the variations not always existing in a sum
+
+*** TODO reconsider conclusions after including [[*Edit: A suggestion from a user on the Haskell discord that is correct by construction and ergonomic][new example]]
