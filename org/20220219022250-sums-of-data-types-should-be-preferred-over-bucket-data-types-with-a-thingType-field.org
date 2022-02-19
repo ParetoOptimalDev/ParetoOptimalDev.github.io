@@ -1,0 +1,220 @@
+:PROPERTIES:
+:ID:       9507f189-b921-40bc-9774-37f0febf4364
+:END:
+#+title: Sums of data types should be preferred over "bucket" data types with a `thingType` field
+
+* Which are the tradeoffs of these two? Is one better overall?
+
+** =User= data type contains =userType :: UserType= field with Sum type to differentiate
+
+*** types
+
+#+begin_src haskell :noweb-ref userTypes :tangle no
+data UserType = FreeUser | PaidUser
+data User =
+  User { userId :: Int
+       , userName :: String
+       , userType :: UserType
+       , userRewardPoints :: Maybe Int
+       }
+#+end_src
+
+#+begin_src haskell :noweb-ref articleTypes :tangle no
+data ArticleType = FreeArticle | PaidArticle
+data Article =
+  Article
+  { articleId :: Int
+  , articleName :: Text
+  , articleTitle :: Text
+  , articleType :: ArticleType
+  }
+#+end_src
+
+
+*** case
+
+#+begin_src haskell :noweb-ref serveArticle :tangle no
+serveArticle :: ArticleID -> Servant.Handler
+serveArticle aId = do
+  -- ... snip ...
+  a <- runDB $ getArticle aId
+  case userType u of
+    PaidUser ->
+      case articleType a of
+        PaidArticle -> do
+          runDB $ upsert user { userRewardPoints = fmap (+ 5) (userRewardPoints u) }
+          displayArticle a
+        FreeArticle -> do
+          runDB $ upsert user { userRewardPoints = fmap (+ 2) (userRewardPoints u) }
+          displayArticle a
+    FreeUser -> case articleType a of
+        PaidArticle -> Http400 "denied"
+        FreeArticle -> displayArticle a
+#+end_src
+
+
+*** tangle
+
+#+begin_src haskell :noweb yes :tangle UserWithSumInside.hs
+module Main where
+
+<<userTypes>>
+
+<<articleTypes>>
+
+<<serveArticle>>
+#+end_src
+
+
+** =User= is a sum type containing different entire different Users and their sometimes duplicate contents
+
+*** types
+
+#+begin_src haskell
+data FreeUser =
+  FreeUser { freeUserId :: Int
+           , freeUserName :: String
+           , freeUserType :: UserType
+           }
+data PaidUser =
+  PaidUser { paidUserId :: Int
+           , paidUserName :: String
+           , paidUserType :: UserType
+           , paidUserRewardPoints :: Int
+           }
+data User = Free FreeUser
+          | Paid PaidUser
+#+end_src
+
+#+begin_src haskell
+data FreeArticle =
+  FreeArticle { freeArticleId :: Int
+              , freeArticleName :: String
+              }
+data PaidArticle =
+  PaidArticle { paidArticleId :: Int
+              , paidArticleName :: String
+              }
+data Article =  Free FreeArticle | Paid PaidArticle
+#+end_src
+
+
+*** case
+
+#+begin_src haskell :noweb-ref serveArticle :tangle no
+serveArticle :: ArticleID -> Servant.Handler
+serveArticle aId = do
+  -- ... snip ...
+  a <- runDB $ getArticle aId
+  case u of
+    PaidUser pu ->
+      case a of
+        PaidArticle pa -> do
+          runDB $ upsert user { paidUserRewardPoints = (+ 5) (paidUserRewardPoints pu) }
+          displayArticle pa
+        FreeArticle fa -> do
+          runDB $ upsert user { paidUserRewardPoints = (+ 2) (paidUserRewardPoints pu) }
+          displayArticle fa
+    FreeUser _ -> case articleType a of
+        PaidArticle _ -> Http400 "denied"
+        FreeArticle fa -> displayArticle fa
+#+end_src
+
+
+*** tangle
+
+#+begin_src haskell :noweb yes :tangle SumWithUserInside.hs
+module Main where
+
+<<userTypes2>>
+
+<<articleTypes2>>
+
+<<serveArticle2>>
+#+end_src
+
+
+
+
+** Comparing the calling code
+
+We case differently on both user and article with these approaches. Does either seem advantageous?
+
+#+begin_src haskell :noweb-ref serveArticle :tangle no
+serveArticle :: ArticleID -> Servant.Handler
+serveArticle aId = do
+  -- ... snip ...
+  a <- runDB $ getArticle aId
+  case userType u of
+    PaidUser ->
+      case articleType a of
+        PaidArticle -> do
+          runDB $ upsert user { userRewardPoints = fmap (+ 5) (userRewardPoints u) }
+          displayArticle a
+        FreeArticle -> do
+          runDB $ upsert user { userRewardPoints = fmap (+ 2) (userRewardPoints u) }
+          displayArticle a
+    FreeUser -> case articleType a of
+        PaidArticle -> Http400 "denied"
+        FreeArticle -> displayArticle a
+#+end_src
+
+#+begin_src haskell :tangle no
+serveArticle :: ArticleID -> Servant.Handler
+serveArticle aId = do
+  -- ... snip ...
+  a <- runDB $ getArticle aId
+  case u of
+    PaidUser pu ->
+      case a of
+        PaidArticle pa -> do
+          runDB $ upsert user { paidUserRewardPoints = fmap (+ 5) (paidUserRewardPoints pu) }
+          displayArticle pa
+        FreeArticle fa -> do
+          runDB $ upsert user { paidUserRewardPoints = fmap (+ 2) (paidUserRewardPoints pu) }
+          displayArticle fa
+    FreeUser _ -> case articleType a of
+        PaidArticle _ -> Http400 "denied"
+        FreeArticle fa -> displayArticle fa
+#+end_src
+
+
+** my commentary
+
+*** =User= is not correct by construction with the userType example
+
+#+begin_src haskell
+User { userId = 0
+     , userName "h4x0r"
+     , userType = FreeUser
+     , userRewardPoints = Just 10000 -- free users shouldn't have reward points
+     } 
+#+end_src
+
+*** =User= is correct by construction with the sum containing different Users
+
+#+begin_src haskell
+Free (FreeUser
+      { freeUserId = 0
+      , freeUserName "valid free"
+      }) 
+#+end_src
+
+#+begin_src haskell
+Paid (PaidUser
+       { paidUserId = 1
+       , paidUserName "valid paid"
+       , paidUserRewardPoints = 10000
+     }) 
+#+end_src
+
+
+** conclusion
+
+*** sum of different types only really big advantage is being correct by construction
+
+**** Another advantage stemming from that is preventing a proliferation of optional fields muddying the purpose of individual types 
+
+***** this typically has a side effect of having to laboriously validate this type in calling code over and over, hiding other codes intention infectiously
+
+*** Sums of data types should be preferred over "bucket" data types with a `thingType` field
