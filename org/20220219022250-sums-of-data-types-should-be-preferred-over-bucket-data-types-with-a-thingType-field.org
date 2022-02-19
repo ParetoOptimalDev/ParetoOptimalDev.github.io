@@ -53,7 +53,7 @@ serveArticle aId = do
 #+end_src
 
 
-*** tangle
+*** tangle                                                       :noexport:
 
 #+begin_src haskell :noweb yes :tangle UserWithSumInside.hs
 module Main where
@@ -121,7 +121,7 @@ serveArticle aId = do
 #+end_src
 
 
-*** tangle
+*** tangle                                                       :noexport:
 
 #+begin_src haskell :noweb yes :tangle SumWithUserInside.hs
 module Main where
